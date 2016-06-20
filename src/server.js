@@ -1,5 +1,6 @@
 import express from 'express';
 
+
 export function startServer(wagner) {
 
   wagner.invoke((config, sequelize, apiRouter) => {
