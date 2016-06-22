@@ -2,39 +2,26 @@
 import { expect } from 'chai';
 import express from 'express';
 import multer from 'multer';
-import wagner from 'wagner-core';
 import { post, get } from 'superagent';
 
-import { init as initModels } from '../../src/models';
+import config from '../../src/config';
 import announcementsAPI from '../../src/api/announcement';
+import { Announcement, sequelize } from '../../src/models';
 
 describe('Announcement API', () => {
   const url = 'http://127.0.0.1:8001/announcement';
-  let Announcement;
   let server;
 
   before(done => {
-    wagner.factory('config', () => {
-      return {
-        port: 8001,
-        env: 'development'
-      };
-    });
-
-    initModels(wagner);
-    Announcement = wagner.invoke(Announcement => Announcement);
-
-    wagner.factory('multer', () => multer({ dest: '../fixtures' }));
-    const subRouter = announcementsAPI(wagner);
+    const parser = multer({ dest: './test/fixtures' });
+    const subRouter = announcementsAPI(parser);
 
     const app = express();
     app.use(subRouter);
 
-    wagner.invoke((sequelize, config) => {
-      sequelize.sync({ force: true }).then(() => {
-        server = app.listen(config.port, () => {
-          done();
-        });
+    sequelize.sync({ force: true }).then(() => {
+      server = app.listen(config.port, () => {
+        done();
       });
     });
   });
@@ -155,7 +142,7 @@ describe('Announcement API', () => {
     const req = post(url)
       .set('Content-Type', 'multipart/form-data');
     // workaround for sending an empty multipart request,
-    // initializes the formdata
+    // initializes the form-data
     req._getFormData();
     //
     req.end((err, res) => {
