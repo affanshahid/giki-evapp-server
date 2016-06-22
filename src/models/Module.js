@@ -24,6 +24,18 @@ export default function (sequelize, DataTypes) {
     locTag:{
       allowNull: false,
       type: DataTypes.ENUM.apply(null, locTags)
+    },
+    startEpoch:{
+      type: DataTypes.VIRTUAL,
+      get: function () {
+        return new Date(this.get('startTime')).getTime();
+      }
+    },
+    endEpoch:{
+      type: DataTypes.VIRTUAL,
+      get: function () {
+        return new Date(this.get('endTime')).getTime();
+      }
     }
   });
 }

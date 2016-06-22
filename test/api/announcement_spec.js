@@ -5,7 +5,7 @@ import multer from 'multer';
 import { post, get } from 'superagent';
 
 import config from '../../src/config';
-import announcementsAPI from '../../src/api/announcement';
+import { getRouter as getAnnouncementRouter } from '../../src/api/announcement';
 import { Announcement, sequelize } from '../../src/models';
 
 describe('Announcement API', () => {
@@ -14,7 +14,7 @@ describe('Announcement API', () => {
 
   before(done => {
     const parser = multer({ dest: './test/fixtures' });
-    const subRouter = announcementsAPI(parser);
+    const subRouter = getAnnouncementRouter(parser);
 
     const app = express();
     app.use(subRouter);
