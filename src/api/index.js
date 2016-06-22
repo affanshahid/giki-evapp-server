@@ -2,18 +2,11 @@ import { Router } from 'express';
 import announcement from './announcement';
 import multer from 'multer';
 
-export function init(wagner) {
-  wagner.factory('multer', () => {
-    return multer({ dest: './data/images' });
-  });
+const parser = multer({ dest: './data/images' });
+const router = Router();
 
-  wagner.factory('apiRouter', () => {
-    const router = Router();
+const announcementRouter = announcement(parser);
 
-    const announcementRouter = announcement(wagner);
+router.use(announcementRouter);
 
-    router.use(announcementRouter);
-
-    return router;
-  });
-}
+export default router;

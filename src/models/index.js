@@ -1,13 +1,12 @@
 import Sequelize from 'sequelize';
+import config from '../config';
 
-export function init(wagner) {
-  wagner.factory('sequelize', initDB);
+export const sequelize = initDB();
 
-  wagner.factory('Announcement', sequelize => sequelize.import('./Announcement'));
-  wagner.factory('Module', sequelize => sequelize.import('./Module'));
-}
+export const Announcement = sequelize.import('./Announcement');
+export const Module = sequelize.import('./Module');
 
-function initDB(config) {
+function initDB() {
   let sequelize;
 
   if (config.env === 'development') {

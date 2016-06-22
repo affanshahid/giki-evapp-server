@@ -1,19 +1,17 @@
 import express from 'express';
+import config from './config';
+import { sequelize } from './models';
+import api from './api';
 
+export function startServer() {
+  const app = express();
+  const PORT = config.port;
 
-export function startServer(wagner) {
+  app.use('/api/v1', api);
 
-  wagner.invoke((config, sequelize, apiRouter) => {
-    const app = express();
-    const PORT = config.port;
-
-    app.use('/api/v1', apiRouter);
-
-    sequelize.sync({ force: true }).then(() => {
-      app.listen(PORT, () => {
-        console.log(`Server started on port: ${PORT}`);
-      });
+  sequelize.sync({ force: true }).then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server started on port: ${PORT}`);
     });
   });
-
 }
