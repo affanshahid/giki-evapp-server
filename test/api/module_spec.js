@@ -70,4 +70,20 @@ describe('Module API', () => {
     });
   });
 
+  it('returns an empty list if there are no modules', done => {
+    get(url, (err, res) => {
+      expect(err).to.not.be.ok;
+      expect(res).to.be.ok;
+      let parsed;
+      expect(() => {
+        parsed = JSON.parse(res.text);
+      }).to.not.throw();
+      expect(parsed).to.have.property('modules');
+      expect(parsed.modules).to.have.lengthOf(0);
+      done();
+    });
+  });
+
+  
+
 });
