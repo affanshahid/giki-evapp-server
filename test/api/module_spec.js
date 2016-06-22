@@ -2,7 +2,7 @@
 import { expect } from 'chai';
 import express from 'express';
 import multer from 'multer';
-import { get } from 'superagent';
+import { post, get } from 'superagent';
 
 import config from '../../src/config';
 import { getRouter as getModuleRouter } from '../../src/api/module';
@@ -84,6 +84,121 @@ describe('Module API', () => {
     });
   });
 
-  
+  it('can save new modules', done => {
+    post(url)
+      .set('Content-Type', 'multipart/form-data')
+      .field('title', 'Archery')
+      .field('description', 'Archery Competition')
+      .field('startTime', '1466620272000')
+      .field('endTime', '1466620272000')
+      .field('locTag', 'H10')
+      .end((err, res) => {
+        expect(err).to.not.be.ok;
+        expect(res).to.be.ok;
+        let parsed;
+        expect(() => {
+          parsed = JSON.parse(res.text);
+        }).to.not.throw();
+        expect(parsed.success).to.be.ok;
+        expect(parsed).to.have.property('module');
+        expect(parsed.module.title).to.equal('Archery');
+        expect(parsed.module.description).to.equal('Archery Competition');
+        expect(parsed.module).to.have.property('startTime');
+        expect(parsed.module).to.have.property('endTime');
+        Module.findOne().then(mod => {
+          expect(mod.title).to.equal('Archery');
+          expect(mod.description).to.equal('Archery Competition');
+          done();
+        });
+      });
+  });
+
+  it('can accept image uploads', done => {
+    post(url)
+      .set('Content-Type', 'multipart/form-data')
+      .field('title', 'Archery')
+      .field('description', 'Archery Competition')
+      .field('startTime', '1466620272000')
+      .field('endTime', '1466620272000')
+      .field('locTag', 'H10')
+      .attach('image', './test/fixtures/dot.png')
+      .end((err, res) => {
+        expect(err).to.not.be.ok;
+        expect(res).to.be.ok;
+        let parsed;
+        expect(() => {
+          parsed = JSON.parse(res.text);
+        }).to.not.throw();
+        expect(parsed.success).to.be.ok;
+        expect(parsed).to.have.property('module');
+        expect(parsed.module.title).to.equal('Archery');
+        expect(parsed.module.description).to.equal('Archery Competition');
+        expect(parsed.module).to.have.propert('fileId');
+        expect(parsed.module).to.have.property('startTime');
+        expect(parsed.module).to.have.property('endTime');
+        Module.findOne().then(mod => {
+          expect(mod.title).to.equal('Archery');
+          expect(mod.description).to.equal('Archery Competition');
+          expect(mod).to.have.propert('fileId');
+          done();
+        });
+      });
+  });
+
+  it('stores the correct time supplied as a timestamp', (done) => {
+    post(url)
+      .set('Content-Type', 'multipart/form-data')
+      .field('title', 'Archery')
+      .field('description', 'Archery Competition')
+      .field('startTime', '06-23-2016 1:10 AM UTC')
+      .field('endTime', '06-23-2016 1:10 AM UTC+5')
+      .field('locTag', 'H10')
+      .end((err, res) => {
+        expect(err).to.not.be.ok;
+        expect(res).to.be.ok;
+        let parsed;
+        expect(() => {
+          parsed = JSON.parse(res.text);
+        }).to.not.throw();
+        expect(parsed.success).to.be.ok;
+        expect(parsed).to.have.property('module');
+        Module.findOne().then(mod => {
+          expect(mod.title).to.equal('Archery');
+          const startEpoch = new Date(mod.startTime).getTime();
+          const endEpoch = new Date(mod.endTime).getTime();
+          expect(startEpoch).to.equal(new Date('06-23-2016 1:10 AM UTC').getTime());
+          expect(endEpoch).to.equal(new Date('06-23-2016 1:10 AM UTC+5').getTime());
+          done();
+        });
+      });
+  });
+
+  it('stores the correct time supplied as epoch time', (done) => {
+    post(url)
+      .set('Content-Type', 'multipart/form-data')
+      .field('title', 'Archery')
+      .field('description', 'Archery Competition')
+      .field('startTime', '1466620272000')
+      .field('endTime', '1466620272000')
+      .field('locTag', 'H10')
+      .end((err, res) => {
+        expect(err).to.not.be.ok;
+        expect(res).to.be.ok;
+        let parsed;
+        expect(() => {
+          parsed = JSON.parse(res.text);
+        }).to.not.throw();
+        expect(parsed.success).to.be.ok;
+        expect(parsed).to.have.property('module');
+        Module.findOne().then(mod => {
+          expect(mod.title).to.equal('Archery');
+          const startEpoch = new Date(mod.startTime).getTime();
+          const endEpoch = new Date(mod.endTime).getTime();
+          expect(startEpoch).to.equal(1466620272000);
+          expect(endEpoch).to.equal(1466620272000);
+          done();
+        });
+      });
+  });
 
 });
