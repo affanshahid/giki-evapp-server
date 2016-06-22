@@ -1,7 +1,7 @@
 /*eslint-env mocha*/
 import { expect } from 'chai';
 import express from 'express';
-import { json } from 'body-parser';
+import multer from 'multer';
 import wagner from 'wagner-core';
 import { post, get } from 'superagent';
 
@@ -9,6 +9,7 @@ import { init as initModels } from '../../src/models';
 import announcementsAPI from '../../src/api/announcement';
 
 describe('Announcement API', () => {
+  const url = 'http://127.0.0.1:8001/announcement';
   let Announcement;
   let server;
 
@@ -21,14 +22,12 @@ describe('Announcement API', () => {
     });
 
     initModels(wagner);
-
     Announcement = wagner.invoke(Announcement => Announcement);
 
+    wagner.factory('multer', () => multer({ dest: '../fixtures' }));
     const subRouter = announcementsAPI(wagner);
 
     const app = express();
-
-    app.use(json());
     app.use(subRouter);
 
     wagner.invoke((sequelize, config) => {
@@ -56,7 +55,6 @@ describe('Announcement API', () => {
       description: 'Delayed to 11:00 pm'
     }).then((anc) => {
       expect(anc).to.be.ok;
-      const url = 'http://127.0.0.1:8001/announcement';
 
       get(url, (err, res) => {
         expect(err).to.not.be.ok;
@@ -75,7 +73,6 @@ describe('Announcement API', () => {
   });
 
   it('returns an empty list when there are no announcements', done => {
-    const url = 'http://127.0.0.1:8001/announcement';
 
     get(url, (err, res) => {
       expect(err).to.not.be.ok;
@@ -91,74 +88,80 @@ describe('Announcement API', () => {
   });
 
   it('can save new announcements', (done) => {
-    const url = 'http://127.0.0.1:8001/announcement';
 
-    post(url).send({
-      title: 'Archery Competition Delay',
-      description: 'Delayed to 11:00 pm'
-    }).end((err, res) => {
-      expect(err).to.not.be.ok;
-      expect(res).to.be.ok;
+    post(url)
+      .field('title', 'Archery Competition Delay')
+      .field('description', 'Delayed to 11:00 pm')
+      .set('Content-Type', 'multipart/form-data')
+      .end((err, res) => {
+        expect(err).to.not.be.ok;
+        expect(res).to.be.ok;
 
-      let parsedResponse;
-      expect(() => {
-        parsedResponse = JSON.parse(res.text);
-      }).to.not.throw();
-      const success = parsedResponse.success;
-      const announcement = parsedResponse.announcement;
+        let parsedResponse;
+        expect(() => {
+          parsedResponse = JSON.parse(res.text);
+        }).to.not.throw();
+        const success = parsedResponse.success;
+        const announcement = parsedResponse.announcement;
 
-      expect(success).to.be.ok;
-      expect(announcement).to.be.ok;
-      expect(announcement).to.have.property('id');
+        expect(success).to.be.ok;
+        expect(announcement).to.be.ok;
+        expect(announcement).to.have.property('id');
 
-      Announcement.findById(announcement.id).then(anc => {
-        expect(anc).to.be.ok;
-        expect(anc.title).to.equal('Archery Competition Delay');
-        expect(anc.description).to.equal('Delayed to 11:00 pm');
-        done();
+        Announcement.findById(announcement.id).then(anc => {
+          expect(anc).to.be.ok;
+          expect(anc.title).to.equal('Archery Competition Delay');
+          expect(anc.description).to.equal('Delayed to 11:00 pm');
+          done();
+        });
       });
-    });
   });
 
   it('does not save non-required data', (done) => {
-    const url = 'http://127.0.0.1:8001/announcement';
 
-    post(url).send({
-      title: 'Archery Competition Delay',
-      description: 'Delayed to 11:00 pm',
-      extra: 'extra'
-    }).end((err, res) => {
-      expect(err).to.not.be.ok;
-      expect(res).to.be.ok;
+    post(url)
+      .set('Content-Type', 'multipart/form-data')
+      .field('title', 'Archery Competition Delay')
+      .field('description', 'Delayed to 11:00 pm')
+      .field('extra', 'extra')
+      .end((err, res) => {
+        expect(err).to.not.be.ok;
+        expect(res).to.be.ok;
 
-      let parsedResponse;
-      expect(() => {
-        parsedResponse = JSON.parse(res.text);
-      }).to.not.throw();
-      const success = parsedResponse.success;
-      const announcement = parsedResponse.announcement;
+        let parsedResponse;
+        expect(() => {
+          parsedResponse = JSON.parse(res.text);
+        }).to.not.throw();
+        const success = parsedResponse.success;
+        const announcement = parsedResponse.announcement;
 
-      expect(success).to.be.ok;
-      expect(announcement).to.be.ok;
-      expect(announcement).to.have.property('id');
-      expect(announcement).to.not.have.property('extra');
+        expect(success).to.be.ok;
+        expect(announcement).to.be.ok;
+        expect(announcement).to.have.property('id');
+        expect(announcement).to.not.have.property('extra');
 
-      Announcement.findById(announcement.id).then(anc => {
-        expect(anc).to.be.ok;
-        expect(anc.title).to.equal('Archery Competition Delay');
-        expect(anc.description).to.equal('Delayed to 11:00 pm');
-        done();
+        Announcement.findById(announcement.id).then(anc => {
+          expect(anc).to.be.ok;
+          expect(anc.title).to.equal('Archery Competition Delay');
+          expect(anc.description).to.equal('Delayed to 11:00 pm');
+          expect(anc).to.not.have.property('extra');
+          done();
+        });
       });
-    });
   });
 
   it('errors out if data sent to the server is incomplete', done => {
-    const url = 'http://127.0.0.1:8001/announcement';
 
-    post(url).send({}).end((err, res) => {
+    const req = post(url)
+      .set('Content-Type', 'multipart/form-data');
+    // workaround for sending an empty multipart request,
+    // initializes the formdata
+    req._getFormData();
+    //
+    req.end((err, res) => {
       expect(err).to.be.ok;
+      expect(err.status).to.equal(400);
       expect(res).to.be.ok;
-
       let parsedResponse;
       expect(() => {
         parsedResponse = JSON.parse(res.text);
@@ -171,5 +174,4 @@ describe('Announcement API', () => {
       done();
     });
   });
-
 });

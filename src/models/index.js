@@ -3,7 +3,8 @@ import Sequelize from 'sequelize';
 export function init(wagner) {
   wagner.factory('sequelize', initDB);
 
-  wagner.factory('Announcement', (sequelize) => sequelize.import('./Announcement'));
+  wagner.factory('Announcement', sequelize => sequelize.import('./Announcement'));
+  wagner.factory('Module', sequelize => sequelize.import('./Module'));
 }
 
 function initDB(config) {
