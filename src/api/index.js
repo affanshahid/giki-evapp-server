@@ -2,7 +2,9 @@ import { Router } from 'express';
 import announcement from './announcement';
 import multer from 'multer';
 
-const parser = multer({ dest: './data/images' });
+import config from '../config';
+
+const parser = multer({ dest: config.uploadsFolder });
 const router = Router();
 
 const announcementRouter = announcement(parser);
