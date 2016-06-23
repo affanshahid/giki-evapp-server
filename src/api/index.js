@@ -5,7 +5,7 @@ import multer from 'multer';
 
 import config from '../config';
 
-const parser = multer({ dest: config.uploadsFolder });
+const parser = multer(config.multerOpts);
 const router = Router();
 
 const announcementRouter = getAnnouncementRouter(parser);

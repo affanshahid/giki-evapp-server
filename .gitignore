@@ -1,3 +1,9 @@
 node_modules/
 build/
 *.sqlite
+*.log
+working_area/
+data/images/*
+!data/images/.keep
+test/fixtures/data/images/*
+!test/fixtures/data/images/.keep

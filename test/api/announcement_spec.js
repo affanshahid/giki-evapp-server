@@ -9,11 +9,11 @@ import { getRouter as getAnnouncementRouter } from '../../src/api/announcement';
 import { Announcement, sequelize } from '../../src/models';
 
 describe('Announcement API', () => {
-  const url = 'http://127.0.0.1:8001/announcement';
+  const url = `http://127.0.0.1:${config.port}/announcement`;
   let server;
 
   before(done => {
-    const parser = multer({ dest: './test/fixtures' });
+    const parser = multer(config.multerOpts);
     const subRouter = getAnnouncementRouter(parser);
 
     const app = express();
@@ -158,7 +158,10 @@ describe('Announcement API', () => {
 
       expect(success).to.not.be.ok;
       expect(error).to.be.ok;
-      done();
+      Announcement.find().then(anc => {
+        expect(anc).to.not.be.ok;
+        done();
+      });
     });
   });
 });

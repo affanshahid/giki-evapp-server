@@ -2,6 +2,8 @@
 import { expect } from 'chai';
 import express from 'express';
 import multer from 'multer';
+import glob from 'glob';
+import { unlinkSync } from 'fs';
 import { post, get } from 'superagent';
 
 import config from '../../src/config';
@@ -9,11 +11,11 @@ import { getRouter as getModuleRouter } from '../../src/api/module';
 import { Module, sequelize } from '../../src/models';
 
 describe('Module API', () => {
-  const url = 'http://127.0.0.1:8001/module';
+  const url = `http://127.0.0.1:${config.port}/module`;
   let server;
 
   before(done => {
-    const parser = multer({ dest: './test/fixtures' });
+    const parser = multer(config.multerOpts);
     const subRouter = getModuleRouter(parser);
 
     const app = express();
@@ -33,6 +35,14 @@ describe('Module API', () => {
   beforeEach(done => {
     Module.truncate().then(() => {
       done();
+    });
+  });
+
+  afterEach(() => {
+    glob('test/fixtures/data/images/*', (err, files) => {
+      for (let file of files) {
+        unlinkSync(file);
+      }
     });
   });
 
@@ -133,13 +143,13 @@ describe('Module API', () => {
         expect(parsed).to.have.property('module');
         expect(parsed.module.title).to.equal('Archery');
         expect(parsed.module.description).to.equal('Archery Competition');
-        expect(parsed.module).to.have.propert('fileId');
+        expect(parsed.module).to.have.property('fileId');
         expect(parsed.module).to.have.property('startTime');
         expect(parsed.module).to.have.property('endTime');
         Module.findOne().then(mod => {
           expect(mod.title).to.equal('Archery');
           expect(mod.description).to.equal('Archery Competition');
-          expect(mod).to.have.propert('fileId');
+          expect(mod).to.have.property('fileId');
           done();
         });
       });
@@ -196,6 +206,63 @@ describe('Module API', () => {
           const endEpoch = new Date(mod.endTime).getTime();
           expect(startEpoch).to.equal(1466620272000);
           expect(endEpoch).to.equal(1466620272000);
+          done();
+        });
+      });
+  });
+
+  it('does not save extra data', done => {
+    post(url)
+      .set('Content-Type', 'multipart/form-data')
+      .field('title', 'Archery')
+      .field('description', 'Archery Competition')
+      .field('startTime', '1466620272000')
+      .field('endTime', '1466620272000')
+      .field('useless', 'useless')
+      .field('locTag', 'H10')
+      .end((err, res) => {
+        expect(err).to.not.be.ok;
+        expect(res).to.be.ok;
+        let parsed;
+        expect(() => {
+          parsed = JSON.parse(res.text);
+        }).to.not.throw();
+        expect(parsed.success).to.be.ok;
+        expect(parsed).to.have.property('module');
+        expect(parsed.module.title).to.equal('Archery');
+        expect(parsed.module.description).to.equal('Archery Competition');
+        expect(parsed.module).to.have.property('startTime');
+        expect(parsed.module).to.have.property('endTime');
+        expect(parsed.module).to.not.have.property('useless');
+        Module.findOne().then(mod => {
+          expect(mod.title).to.equal('Archery');
+          expect(mod.description).to.equal('Archery Competition');
+          expect(mod).to.not.have.property('useless');
+          done();
+        });
+      });
+  });
+
+  it('erros out if the data sent is incomplete', done => {
+    // no loctag
+    post(url)
+      .set('Content-Type', 'multipart/form-data')
+      .field('title', 'Archery')
+      .field('description', 'Archery Competition')
+      .field('startTime', '1466620272000')
+      .field('endTime', '1466620272000')
+      .end((err, res) => {
+        expect(err).to.be.ok;
+        expect(err.status).to.equal(400);
+        expect(res).to.be.ok;
+        let parsed;
+        expect(() => {
+          parsed = JSON.parse(res.text);
+        }).to.not.throw();
+        expect(parsed.success).to.not.be.ok;
+        expect(parsed).to.have.property('error');
+        Module.find().then(mod => {
+          expect(mod).to.not.be.ok;
           done();
         });
       });
