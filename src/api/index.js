@@ -1,6 +1,7 @@
 import { Router, static as staticMW } from 'express';
 import { getRouter as getAnnouncementRouter } from './announcement';
 import { getRouter as getModuleRouter } from './module';
+import { getRouter as getNewsRouter } from './news';
 import cloudinary from 'cloudinary';
 import cloudinaryStorage from 'multer-storage-cloudinary';
 import multer from 'multer';
@@ -19,8 +20,10 @@ const parser = multer(config.multerOpts);
 
 const announcementRouter = getAnnouncementRouter(parser);
 const moduleRouter = getModuleRouter(parser);
+const newsRouter = getNewsRouter(parser);
 
 router.use(moduleRouter);
 router.use(announcementRouter);
+router.use(newsRouter);
 
 export default router;
