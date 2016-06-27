@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('Module', {
+  return sequelize.define('News', {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
