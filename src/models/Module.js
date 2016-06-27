@@ -12,7 +12,7 @@ export default function (sequelize, DataTypes) {
     },
     link: DataTypes.STRING,
     category: DataTypes.STRING,
-    fileId: DataTypes.STRING,
+    fileUrl: DataTypes.STRING,
     startTime: {
       type: DataTypes.DATE,
       allowNull: false

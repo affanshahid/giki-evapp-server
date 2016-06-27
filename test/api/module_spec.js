@@ -11,7 +11,9 @@ import { getRouter as getModuleRouter } from '../../src/api/module';
 import { Module, sequelize } from '../../src/models';
 
 describe('Module API', () => {
-  const url = `http://127.0.0.1:${config.port}/module`;
+  const baseUrl = `http://127.0.0.1:${config.port}`;
+  const moduleUrl = `${baseUrl}/module/`;
+  const imageUrl = `${baseUrl}/image/`;
   let server;
 
   before(done => {
@@ -20,7 +22,7 @@ describe('Module API', () => {
 
     const app = express();
     app.use(subRouter);
-
+    app.use('/image/', express.static('./test/fixtures/data/images/'));
     sequelize.sync({ force: true }).then(() => {
       server = app.listen(config.port, () => {
         done();
@@ -47,23 +49,20 @@ describe('Module API', () => {
   });
 
   it('it loads all modules', done => {
-    Module.bulkCreate([
-      {
-        title: 'Archery',
-        description: 'Archery Competition',
-        startTime: 1466620272000,
-        endTime: 1466620272000,
-        locTag: 'H10'
-      },
-      {
-        title: 'Swimming',
-        description: 'Swimming Competition',
-        startTime: 1466620272000,
-        endTime: 1466620272000,
-        locTag: 'H9'
-      }
-    ]).then(() => {
-      get(url, (err, res) => {
+    Module.bulkCreate([{
+      title: 'Archery',
+      description: 'Archery Competition',
+      startTime: 1466620272000,
+      endTime: 1466620272000,
+      locTag: 'H10'
+    }, {
+      title: 'Swimming',
+      description: 'Swimming Competition',
+      startTime: 1466620272000,
+      endTime: 1466620272000,
+      locTag: 'H9'
+    }]).then(() => {
+      get(moduleUrl, (err, res) => {
         expect(err).to.not.be.ok;
         expect(res).to.be.ok;
         let parsed;
@@ -81,7 +80,7 @@ describe('Module API', () => {
   });
 
   it('returns an empty list if there are no modules', done => {
-    get(url, (err, res) => {
+    get(moduleUrl, (err, res) => {
       expect(err).to.not.be.ok;
       expect(res).to.be.ok;
       let parsed;
@@ -95,7 +94,7 @@ describe('Module API', () => {
   });
 
   it('can save new modules', done => {
-    post(url)
+    post(moduleUrl)
       .set('Content-Type', 'multipart/form-data')
       .field('title', 'Archery')
       .field('description', 'Archery Competition')
@@ -118,45 +117,13 @@ describe('Module API', () => {
         Module.findOne().then(mod => {
           expect(mod.title).to.equal('Archery');
           expect(mod.description).to.equal('Archery Competition');
-          done();
-        });
-      });
-  });
-
-  it('can accept image uploads', done => {
-    post(url)
-      .set('Content-Type', 'multipart/form-data')
-      .field('title', 'Archery')
-      .field('description', 'Archery Competition')
-      .field('startTime', '1466620272000')
-      .field('endTime', '1466620272000')
-      .field('locTag', 'H10')
-      .attach('image', './test/fixtures/dot.png')
-      .end((err, res) => {
-        expect(err).to.not.be.ok;
-        expect(res).to.be.ok;
-        let parsed;
-        expect(() => {
-          parsed = JSON.parse(res.text);
-        }).to.not.throw();
-        expect(parsed.success).to.be.ok;
-        expect(parsed).to.have.property('module');
-        expect(parsed.module.title).to.equal('Archery');
-        expect(parsed.module.description).to.equal('Archery Competition');
-        expect(parsed.module).to.have.property('fileId');
-        expect(parsed.module).to.have.property('startTime');
-        expect(parsed.module).to.have.property('endTime');
-        Module.findOne().then(mod => {
-          expect(mod.title).to.equal('Archery');
-          expect(mod.description).to.equal('Archery Competition');
-          expect(mod).to.have.property('fileId');
           done();
         });
       });
   });
 
   it('stores the correct time supplied as a timestamp', (done) => {
-    post(url)
+    post(moduleUrl)
       .set('Content-Type', 'multipart/form-data')
       .field('title', 'Archery')
       .field('description', 'Archery Competition')
@@ -184,7 +151,7 @@ describe('Module API', () => {
   });
 
   it('stores the correct time supplied as epoch time', (done) => {
-    post(url)
+    post(moduleUrl)
       .set('Content-Type', 'multipart/form-data')
       .field('title', 'Archery')
       .field('description', 'Archery Competition')
@@ -212,7 +179,7 @@ describe('Module API', () => {
   });
 
   it('does not save extra data', done => {
-    post(url)
+    post(moduleUrl)
       .set('Content-Type', 'multipart/form-data')
       .field('title', 'Archery')
       .field('description', 'Archery Competition')
@@ -243,9 +210,9 @@ describe('Module API', () => {
       });
   });
 
-  it('erros out if the data sent is incomplete', done => {
+  it('errors out if the data sent is incomplete', done => {
     // no loctag
-    post(url)
+    post(moduleUrl)
       .set('Content-Type', 'multipart/form-data')
       .field('title', 'Archery')
       .field('description', 'Archery Competition')
@@ -266,6 +233,97 @@ describe('Module API', () => {
           done();
         });
       });
+  });
+
+  describe('Image API', () => {
+
+    it('can accept image uploads', done => {
+      post(moduleUrl)
+        .set('Content-Type', 'multipart/form-data')
+        .field('title', 'Archery')
+        .field('description', 'Archery Competition')
+        .field('startTime', '1466620272000')
+        .field('endTime', '1466620272000')
+        .field('locTag', 'H10')
+        .attach('image', './test/fixtures/dot.png')
+        .end((err, res) => {
+          expect(err).to.not.be.ok;
+          expect(res).to.be.ok;
+          let parsed;
+          expect(() => {
+            parsed = JSON.parse(res.text);
+          }).to.not.throw();
+          expect(parsed.success).to.be.ok;
+          expect(parsed).to.have.property('module');
+          expect(parsed.module.title).to.equal('Archery');
+          expect(parsed.module.description).to.equal('Archery Competition');
+          expect(parsed.module).to.have.property('fileUrl');
+          expect(parsed.module).to.have.property('startTime');
+          expect(parsed.module).to.have.property('endTime');
+          Module.findOne().then(mod => {
+            expect(mod.title).to.equal('Archery');
+            expect(mod.description).to.equal('Archery Competition');
+            expect(mod).to.have.property('fileUrl');
+            done();
+          });
+        });
+    });
+
+    it('allows uploaded files to be accessed', done => {
+      post(moduleUrl)
+        .set('Content-Type', 'multipart/form-data')
+        .field('title', 'Archery')
+        .field('description', 'Archery Competition')
+        .field('startTime', '1466620272000')
+        .field('endTime', '1466620272000')
+        .field('locTag', 'H10')
+        .attach('image', './test/fixtures/dot.png')
+        .end((err, res) => {
+          expect(err).to.not.be.ok;
+          expect(res).to.be.ok;
+          let parsed;
+          expect(() => {
+            parsed = JSON.parse(res.text);
+          }).to.not.throw();
+          expect(parsed.success).to.be.ok;
+          expect(parsed).to.have.property('module');
+          expect(parsed.module.title).to.equal('Archery');
+          expect(parsed.module.description).to.equal('Archery Competition');
+          expect(parsed.module).to.have.property('fileUrl');
+          expect(parsed.module).to.have.property('startTime');
+          expect(parsed.module).to.have.property('endTime');
+          Module.findOne().then(mod => {
+            expect(mod.title).to.equal('Archery');
+            expect(mod.description).to.equal('Archery Competition');
+            expect(mod).to.have.property('fileUrl');
+            get(imageUrl + parsed.module.fileUrl, (err, res) => {
+              expect(err).to.not.be.ok;
+              expect(res).to.be.ok;
+              expect(res).to.have.property('status', 200);
+              done();
+            });
+          });
+        });
+    });
+
+    it('returns an error if more than one image is uploaded', (done) => {
+      post(moduleUrl)
+        .set('Content-Type', 'multipart/form-data')
+        .field('title', 'Archery')
+        .field('description', 'Archery Competition')
+        .field('startTime', '1466620272000')
+        .field('endTime', '1466620272000')
+        .field('locTag', 'H10')
+        .attach('image', './test/fixtures/dot.png')
+        .attach('image', './test/fixtures/dot.png')
+        .end((err, res) => {
+          expect(err).to.be.ok;
+          expect(res).to.be.ok;
+          expect(res).to.have.property('status', 500);
+          done();
+        });
+    });
+
   });
 
 });

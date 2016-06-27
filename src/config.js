@@ -23,7 +23,15 @@ const configs = {
   },
   production: {
     port: process.env.PORT,
-    multerOpts: null, //TODO implement production image storage,
+    cloudinaryOpts: {
+      folder: 'giki-evapp-server',
+      allowedFormats: ['jpg', 'png', 'gif']
+    },
+    multerOpts: {
+      limits: {
+        fileSize: 2 * 1024 * 1024
+      }
+    },
     dbSetup: [process.env.DATABASE_URL],
     dbOpts: {
       dialect: 'postgres',
