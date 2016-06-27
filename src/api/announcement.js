@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { Announcement } from '../models';
 import _ from 'lodash';
 
-export default function (multer) {
+export function getRouter(multer) {
   const router = Router();
 
   router.get('/announcement', (req, res) => {

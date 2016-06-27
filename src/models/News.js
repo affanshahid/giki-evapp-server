@@ -1,5 +1,5 @@
 export default function (sequelize, DataTypes) {
-  return sequelize.define('Announcement', {
+  return sequelize.define('Module', {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -15,6 +15,13 @@ export default function (sequelize, DataTypes) {
         notEmpty: true,
         len: [5,200]
       }
-    }
+    },
+    link: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true
+      }
+    },
+    fileUrl: DataTypes.STRING
   });
 }

@@ -2,12 +2,13 @@
   "name": "giki-evapp-server",
   "version": "1.0.0",
   "description": "API server for GIKI evapp",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "gulp test",
     "build": "gulp build",
     "start": "node build",
-    "serve": "gulp build && node build"
+    "serve": "npm run build && npm start",
+    "watch": "gulp watch"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "babel-preset-es2015": "^6.9.0",
     "chai": "^3.5.0",
     "eslint": "^2.13.0",
+    "glob": "^7.0.5",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-mocha": "^2.2.0",
@@ -35,9 +37,11 @@
     ]
   },
   "dependencies": {
+    "cloudinary": "^1.4.1",
     "express": "^4.14.0",
     "lodash": "^4.13.1",
     "multer": "^1.1.0",
+    "multer-storage-cloudinary": "^1.2.1",
     "sequelize": "^3.23.3",
     "sqlite3": "^3.1.4"
   }
