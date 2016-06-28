@@ -25,6 +25,9 @@ startEpoch | The starting epoch time in milliseconds | UNIX time-stamp
 endTime | The ending epoch time in milliseconds | UNIX time-stamp
 locTag | The venue for the module | See [Location Tags](#Location-Tags) below
 fileUrl | A link to fetch the image | In production it will be a valid URL, however in development it will be a file ID that must be prepended with `/image/`
+id | ID number |
+createdAt | Date of record creation |
+updatedAt | Date of record update |
 
 ###### Location Tags
 The server uses tags to communicate actual venues, according to the following table
@@ -82,4 +85,48 @@ The response will be a JSON document.
      * `error` - An object describing the error
 
 
-* **On success:** It will have a `module` property which will be a [module object](#Module-Object)
+* **On success:** It will have the following properties:
+ * `success` - Set to true
+ * `module` - A [module object](#Module-Object)
+
+## Announcements
+All requests must use multipart/form-data
+
+### `GET /announcements`
+
+#### Response
+The response will be a JSON document.
+
+* **On failure:** It will be empty.
+
+* **On success:** It will have a `announcements` property which will be an array of announcement objects with the following properties:
+
+##### Announcement Object
+name | description | Note
+---- | ---- | ----
+title | Name of the announcement | 5-60 characters
+description | A short description | 5-200 characters
+id | ID number |
+createdAt | Date of record creation |
+updatedAt | Date of record update |
+
+### `POST /announcement`
+
+#### Request parameters
+
+name | description | Note
+---- | ---- | ----
+title | Name of the Announcement | 5-60 characters
+description | A short description | 5-200 characters
+
+#### Response
+The response will be a JSON document.
+
+* **On failure:** It will have the following properties:
+     * `success` - Set to false
+     * `error` - An object describing the error
+
+
+* **On success:** It will have the following properties:
+ * `success` - Set to true
+ * `announcement` - A [announcement object](#Announcement-Object)
