@@ -2,9 +2,9 @@
 ----
 ## Index
 
-* **[Modules](#Modules)**
-* **[Announcements](#Announcements)**
-* **[News](#News)**
+* **[Modules](#modules)**
+* **[Announcements](#announcements)**
+* **[News](#news)**
 
 ## Modules
 All requests must use multipart/form-data
@@ -29,7 +29,7 @@ startTime | The starting date-time | Human-readable
 endTime | The ending date-time | Human-readable
 startEpoch | The starting epoch time in milliseconds | UNIX time-stamp
 endTime | The ending epoch time in milliseconds | UNIX time-stamp
-locTag | The venue for the module | See [Location Tags](#Location-Tags) below
+locTag | The venue for the module | See [Location Tags](#location-tags) below
 fileUrl | A link to fetch the image | In production it will be a valid URL, however in development it will be a file ID that must be prepended with `/image/`
 id | ID number |
 createdAt | Date of record creation |
@@ -69,9 +69,9 @@ title | Name of the module | 5-60 characters
 description | A short description | 5-200 characters
 link  | A url for further information | Valid URL<br/>*optional*
 category | A category name |*optional*
-startTime | The starting date-time | See [Dates](#Dates) below
-endTime | The ending date-time | See [Dates](#Dates) below
-locTag | The venue for the module | See [Location Tags](#Location-Tags) above
+startTime | The starting date-time | See [Dates](#dates) below
+endTime | The ending date-time | See [Dates](#dates) below
+locTag | The venue for the module | See [Location Tags](#location-tags) above
 image | An image for the module |*optional*
 
 ##### Dates
@@ -93,7 +93,7 @@ The response will be a JSON document.
 
 * **On success:** It will have the following properties:
  * `success` - Set to true
- * `module` - A [module object](#Module-Object)
+ * `module` - A [module object](#module-object)
 
 ## Announcements
 All requests must use multipart/form-data
@@ -135,7 +135,7 @@ The response will be a JSON document.
 
 * **On success:** It will have the following properties:
  * `success` - Set to true
- * `announcement` - An [announcement object](#Announcement-Object)
+ * `announcement` - An [announcement object](#announcement-object)
 
 ### `GET /news`
 
@@ -179,4 +179,4 @@ The response will be a JSON document.
 
 * **On success:** It will have the following properties:
  * `success` - Set to true
- * `news` - A [news object](#News-Object)
+ * `news` - A [news object](#news-object)
