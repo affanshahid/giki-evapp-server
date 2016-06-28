@@ -1,5 +1,11 @@
 # API Reference
 ----
+## Index
+
+* **[Modules](#Modules)**
+* **[Announcements](#Announcements)**
+* **[News](#News)**
+
 ## Modules
 All requests must use multipart/form-data
 
@@ -99,7 +105,7 @@ The response will be a JSON document.
 
 * **On failure:** It will be empty.
 
-* **On success:** It will have a `announcements` property which will be an array of announcement objects with the following properties:
+* **On success:** It will have an `announcements` property which will be an array of announcement objects with the following properties:
 
 ##### Announcement Object
 name | description | Note
@@ -116,7 +122,7 @@ updatedAt | Date of record update |
 
 name | description | Note
 ---- | ---- | ----
-title | Name of the Announcement | 5-60 characters
+title | Name of the announcement | 5-60 characters
 description | A short description | 5-200 characters
 
 #### Response
@@ -129,4 +135,48 @@ The response will be a JSON document.
 
 * **On success:** It will have the following properties:
  * `success` - Set to true
- * `announcement` - A [announcement object](#Announcement-Object)
+ * `announcement` - An [announcement object](#Announcement-Object)
+
+### `GET /news`
+
+#### Response
+The response will be a JSON document.
+
+* **On failure:** It will be empty.
+
+* **On success:** It will have a `newsList` property which will be an array of news objects with the following properties:
+
+##### News Object
+name | description | Note
+---- | ---- | ----
+title | Name of the news item | 5-60 characters
+description | A short description | 5-200 characters
+link  | A url for further information | Valid URL
+category | A category name |
+fileUrl | A link to fetch the image | In production it will be a valid URL, however in development it will be a file ID that must be prepended with `/image/`
+id | ID number |
+createdAt | Date of record creation |
+updatedAt | Date of record update |
+
+### `POST /news`
+
+#### Request parameters
+
+name | description | Note
+---- | ---- | ----
+title | Name of the news item | 5-60 characters
+description | A short description | 5-200 characters
+link  | A url for further information | Valid URL<br/>*optional*
+image | An image for the news item |*optional*
+
+#### Response
+The response will be a JSON document.
+
+* **On failure:** It will have the following properties:
+    * `success` - Set to false
+    * `error` - An object describing the error
+
+
+* **On success:** It will have the following properties:
+ * `success` - Set to true
+ * `news` - A [news object](#News-Object)
