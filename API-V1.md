@@ -136,7 +136,7 @@ The response will be a JSON document.
 * **On success:** It will have the following properties:
  * `success` - Set to true
  * `announcement` - An [announcement object](#announcement-object)
- * 
+
 ## News
 All requests must use multipart/form-data
 
