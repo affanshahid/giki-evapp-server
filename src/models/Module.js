@@ -24,7 +24,10 @@ export default function (sequelize, DataTypes) {
         isUrl: true
       }
     },
-    category: DataTypes.STRING,
+    category: {
+      type: DataTypes.STRING,
+      notEmpty: true
+    },
     fileUrl: DataTypes.STRING,
     startTime: {
       type: DataTypes.DATE,

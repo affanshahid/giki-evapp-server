@@ -8,7 +8,8 @@
     "build": "gulp build",
     "start": "node build",
     "serve": "npm run build && npm start",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "author": "",
