@@ -7,4 +7,4 @@ import './styles.css';
 ReactDOM.render(
   <Announcement title="Title" description="description" />,
   document.getElementById('app')
-);Announcement
+);
