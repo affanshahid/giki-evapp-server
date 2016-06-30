@@ -1,0 +1,44 @@
+{
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "rules": {
+    "react/jsx-uses-vars": [2],
+    "react/jsx-uses-react": "error",
+    "react/react-in-jsx-scope": 2,
+    "indent": [
+      "warn",
+      2, {
+        "SwitchCase": 1
+      }
+    ],
+    "linebreak-style": [
+      0,
+      "windows"
+    ],
+    "no-unused-vars": [
+      "warn"
+    ],
+    "semi": [
+      "warn",
+      "always"
+    ],
+    "no-console": [
+      "off"
+    ]
+  },
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react"
+  ]
+}

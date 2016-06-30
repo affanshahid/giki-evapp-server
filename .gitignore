@@ -7,3 +7,5 @@ data/images/*
 !data/images/.keep
 test/fixtures/data/images/*
 !test/fixtures/data/images/.keep
+client/dist/*
+!client/dist/index.html
