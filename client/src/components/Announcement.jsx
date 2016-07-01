@@ -8,13 +8,14 @@ function Announcement(props) {
     backgroundColor: `rgb(${r},${g},${b})`
   };
   return (
-    <article className="announcement">
+    <li className="announcement">
       <div className="dot" style={style}></div>
       <div>
         <h3>{props.title}</h3>
         <p>{props.description}</p>
       </div>
-    </article>
+      <p className="date">{props.createdAt}</p>
+    </li>
   );
 }
 
