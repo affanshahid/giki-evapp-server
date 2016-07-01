@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
-export default function Announcement(props) {
+function Announcement(props) {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
   const b = Math.floor(Math.random() * 256);
@@ -18,7 +18,4 @@ export default function Announcement(props) {
   );
 }
 
-Announcement.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired
-};
+export default Announcement;

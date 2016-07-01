@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 import React from 'react';
-import Announcement from '../../src/components/Announcement.jsx';
+import Announcement from '../../src/components/Announcement';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 

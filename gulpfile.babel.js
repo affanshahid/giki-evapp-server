@@ -39,11 +39,14 @@ gulp.task('test:server', () => {
 });
 
 gulp.task('test:client', () => {
+  const babelReg = require('babel-core/register');
+  babelReg({
+    extensions: ['.jsx', '.js']
+  });
   return gulp.src([
     '!client/test/support/**/*',
     'client/test/**/*@(.js|.jsx)'
   ]).pipe(mocha({
-    compilers: ['js:babel-core/register'],
     require: ['./client/test/support/test-helper.js']
   }));
 });
