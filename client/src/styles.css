@@ -1,0 +1,71 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-family: sans-serif;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/*================================================
+ Announcement
+==================================================*/
+
+li.announcement {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid rgb(193, 193, 193);
+  padding: 10px;
+}
+
+li.announcement:last-child {
+  border-bottom: none;
+}
+
+li.announcement div.dot {
+  height: 20px;
+  width: 20px;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+
+li.announcement> div:nth-child(2) {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+li.announcement> div:nth-child(2) p {
+  text-align: justify;
+}
+
+li.announcement> p.date {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
+  font-size: 0.8em;
+  align-self: flex-start;
+  font-weight: lighter;;
+  color: rgb(161, 161, 161);
+}
+
+
+/*================================================
+ AnnouncementList
+==================================================*/
+
+section.announcement-list {
+  border: 5px solid rgb(52, 75, 143);
+  border-radius: 15px;
+  background-color: rgba(226, 229, 232, 0.88);
+}
+
+section.announcement-list> h1 {
+  text-align: center;
+  color: rgb(53, 87, 144);
+}
