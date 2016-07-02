@@ -1,7 +1,13 @@
 import React from 'react';
 import Announcement from './Announcement';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 class AnnouncementList extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
 
   getSortedList() {
     return this.props.announcements.sort((a1, a2) => {
