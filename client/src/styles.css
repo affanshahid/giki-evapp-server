@@ -114,24 +114,28 @@ article.news-item .image {
   background-position: center;
 }
 
-article.news-item .caption {
-  color: white;
+article.news-item .wrapper {
   position: absolute;
   width: 100%;
   bottom: 0;
   left: 0;
   background: url("https://c402277.ssl.cf1.rackcdn.com/photos/9061/images/original/gradient-4.png");
   background-repeat: repeat-x;
-  padding: 30px 105px;
   background-size: auto 100%;
+}
+
+article.news-item .caption {
+  color: white;
+  max-width: 1160px;
+  padding: 30px 15px;
+  margin: 0 auto;
 }
 
 article.news-item .caption h2 {
   font-size: 1.7em;
-  line-height: 2.3em;
+  line-height: 2.0em;
   text-transform: uppercase;
   display: inline-block;
-  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -141,4 +145,25 @@ article.news-item .caption h3 {
 
 article.news-item .caption h2:hover {
   text-decoration: underline;
+}
+
+
+/*================================================
+ Extra Small Devices
+==================================================*/
+
+@media (max-width: 767px) {
+  article.news-item .caption h2 {
+    font-size: 1.4em;
+  }
+}
+
+/*================================================
+ Super Extra Small Devices
+==================================================*/
+
+@media (max-width: 479px) {
+  article.news-item .caption h2 {
+    font-size: 1.2em;
+  }
 }

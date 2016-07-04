@@ -20,10 +20,12 @@ class NewsItem extends React.Component {
     };
     return (
       <article className="news-item" >
-          <div className="image" style={bg} />
+        <div className="image" style={bg} />
+        <div className="wrapper">
           <div className="caption">
             <h2 onClick={this.handleClick}>{this.props.news.get('title')}</h2>
             <h3>{this.props.news.get('description')}</h3>
+          </div>
         </div>
       </article>
     );
