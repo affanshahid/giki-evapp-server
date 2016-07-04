@@ -11,7 +11,7 @@
     "build:client": "gulp build:client",
     "build:server": "gulp build:server",
     "serve:server": "npm run build:server && npm start",
-    "serve:client": "webpack-dev-server --port 3000 --config \"client/webpack.development.config.babel.js\"",
+    "serve:client": "webpack-dev-server --port 8001 --config \"client/webpack.development.config.babel.js\"",
     "serve": "npm run build && npm start",
     "start": "node build",
     "postinstall": "npm run build"
@@ -65,6 +65,7 @@
     "react": "^15.2.0",
     "react-addons-pure-render-mixin": "^15.2.0",
     "react-dom": "^15.1.0",
+    "react-slick": "^0.12.2",
     "sequelize": "^3.23.3",
     "sqlite3": "^3.1.4",
     "style-loader": "^0.13.1",

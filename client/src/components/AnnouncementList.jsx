@@ -27,13 +27,7 @@ class AnnouncementList extends React.Component {
         <ul>
           {
             this.props.announcements.size ?
-            this.getSortedList().map(anc => (
-              <Announcement
-                key={anc.get('id')}
-                title={anc.get('title')}
-                description={anc.get('description')}
-                createdAt={anc.get('createdAt')} />
-            )) :
+            this.getSortedList().map(anc => <Announcement key={anc.get('id')} announcement={anc} />) :
             (<h3>No announcements</h3>)
           }
         </ul>

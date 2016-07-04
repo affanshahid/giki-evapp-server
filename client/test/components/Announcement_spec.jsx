@@ -3,15 +3,19 @@ import React from 'react';
 import Announcement from '../../src/components/Announcement';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { Map } from 'immutable';
 
 describe('Announcement', () => {
 
   it('renders a colored dot', () => {
+    const announcement = Map({
+      title:"Foo",
+      description:"bar",
+      createdAt:"12/12/2004 10:00"
+    });
     const wrapper = mount(
       <Announcement
-        title="Foo"
-        description="bar"
-        createdAt="12/12/2004 10:00" />
+        announcement={announcement} />
     );
     const dots = wrapper.find('div.dot');
     expect(dots).to.have.lengthOf(1);
@@ -19,11 +23,14 @@ describe('Announcement', () => {
   });
 
   it('renders the title, description and date', () => {
+    const announcement = Map({
+      title:"Foo",
+      description:"bar",
+      createdAt:"12/12/2004 10:00"
+    });
     const wrapper = mount(
       <Announcement
-        title="Foo"
-        description="bar"
-        createdAt="12/12/2004 10:00" />
+        announcement={announcement} />
     );
     const heading = wrapper.find('h3');
     const paras = wrapper.find('p');

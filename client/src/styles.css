@@ -2,7 +2,8 @@
   padding: 0;
   margin: 0;
   font-size: 16px;
-  font-family: sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 .clearfix:after {
@@ -50,7 +51,8 @@ li.announcement> p.date {
   flex-shrink: 0;
   font-size: 0.8em;
   align-self: flex-start;
-  font-weight: lighter;;
+  font-weight: lighter;
+  ;
   color: rgb(161, 161, 161);
 }
 
@@ -68,4 +70,75 @@ section.announcement-list {
 section.announcement-list> h1 {
   text-align: center;
   color: rgb(53, 87, 144);
+}
+
+
+/*================================================
+ NewsSlider
+==================================================*/
+
+section.news-slider {
+  width: 100vw;
+}
+
+.slick-prev {
+  left: 15px;
+}
+
+.slick-next {
+  right: 15px;
+}
+
+.slick-dots {
+  bottom: 7px;
+}
+
+.slick-dots li button:before {
+  opacity: 0.4;
+  color: white;
+}
+
+
+/*================================================
+ NewsItem
+==================================================*/
+
+article.news-item {
+  position: relative;
+}
+
+article.news-item .image {
+  min-height: 320px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+article.news-item .caption {
+  color: white;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background: url("https://c402277.ssl.cf1.rackcdn.com/photos/9061/images/original/gradient-4.png");
+  background-repeat: repeat-x;
+  padding: 30px 105px;
+  background-size: auto 100%;
+}
+
+article.news-item .caption h2 {
+  font-size: 1.7em;
+  line-height: 2.3em;
+  text-transform: uppercase;
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+article.news-item .caption h3 {
+  font-weight: lighter;
+}
+
+article.news-item .caption h2:hover {
+  text-decoration: underline;
 }

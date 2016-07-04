@@ -19,10 +19,10 @@ class Announcement extends React.Component{
       <li className="announcement">
         <div className="dot" style={style}></div>
         <div>
-          <h3>{this.props.title}</h3>
-          <p>{this.props.description}</p>
+          <h3>{this.props.announcement.get('title')}</h3>
+          <p>{this.props.announcement.get('description')}</p>
         </div>
-        <p className="date">{this.props.createdAt}</p>
+        <p className="date">{this.props.announcement.get('createdAt')}</p>
       </li>
     );
   }
