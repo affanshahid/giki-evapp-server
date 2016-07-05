@@ -136,15 +136,15 @@ article.news-item .caption h2 {
   line-height: 2.0em;
   text-transform: uppercase;
   display: inline-block;
-  cursor: pointer;
 }
 
 article.news-item .caption h3 {
   font-weight: lighter;
 }
 
-article.news-item .caption h2:hover {
+article.news-item .caption h2.link:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 
@@ -157,6 +157,7 @@ article.news-item .caption h2:hover {
     font-size: 1.4em;
   }
 }
+
 
 /*================================================
  Super Extra Small Devices

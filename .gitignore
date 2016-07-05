@@ -9,3 +9,4 @@ test/fixtures/data/images/*
 !test/fixtures/data/images/.keep
 client/dist/*
 !client/dist/index.html
+!client/dist/images/*

@@ -2,6 +2,8 @@ import React from 'react';
 import Slider from 'react-slick';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import NewsItem from './NewsItem';
+import { fromJS, List } from 'immutable';
+import { sortByDate } from '../utils/utils';
 
 class NewsSlider extends React.Component {
 
@@ -11,19 +13,9 @@ class NewsSlider extends React.Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.settings = {
       dots: true,
-      arrows: true
+      arrows: true,
+      infinite: false
     };
-  }
-
-  getSortedList() {
-    return this.props.newsList.sort((a1, a2) => {
-      const date1 = new Date(a1.get('createdAt')).getTime();
-      const date2 = new Date(a2.get('createdAt')).getTime();
-
-      if (date1 < date2) return 1;
-      if (date1 > date2) return -1;
-      return 0;
-    });
   }
 
   render() {
@@ -31,7 +23,11 @@ class NewsSlider extends React.Component {
       <section className="news-slider">
         <Slider {...this.settings}>
           {
-            this.getSortedList().map((news) => <div><NewsItem news={news} /></div>)
+            this.props.newsList.size > 0?
+            sortByDate(this.props.newsList).map((news) => (
+              <div key={news.get('id')}><NewsItem news={news} /></div>)
+            ):
+            <div><NewsItem news={this.props.fallbackNews} /></div>
           }
         </Slider>
       </section>
@@ -40,8 +36,13 @@ class NewsSlider extends React.Component {
 
 }
 
-export default NewsSlider;
+NewsSlider.defaultProps = {
+  newsList: List(),
+  fallbackNews: fromJS({
+    title: 'Coming Soon',
+    description: 'Coming Soon',
+    fileUrl: '/images/comingsoon.jpg'
+  })
+};
 
-// {
-//   this.getSortedList().map((news) => <NewsItem news={news} />)
-// }
+export default NewsSlider;

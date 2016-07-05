@@ -1,5 +1,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import classNames from 'classnames';
 
 class NewsItem extends React.Component {
 
@@ -14,16 +15,24 @@ class NewsItem extends React.Component {
     window.open(this.props.news.get('link'), '_blank');
   }
 
+  hasLink(){
+    return this.props.news.has('link');
+  }
+
   render() {
     const bg = {
-      'background-image':`url('${this.props.news.get('fileUrl')}')`
+      backgroundImage:`url('${this.props.news.get('fileUrl')}')`
     };
+    const handler = this.hasLink()? this.handleClick : undefined;
     return (
       <article className="news-item" >
         <div className="image" style={bg} />
         <div className="wrapper">
           <div className="caption">
-            <h2 onClick={this.handleClick}>{this.props.news.get('title')}</h2>
+            <h2 onClick={handler}
+              className={classNames({ link: this.hasLink() })} >
+              {this.props.news.get('title')}
+            </h2>
             <h3>{this.props.news.get('description')}</h3>
           </div>
         </div>
