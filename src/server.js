@@ -8,7 +8,7 @@ export function startServer() {
   const PORT = config.port;
 
   app.use('/api/v1', api);
-
+  app.use(express.static('./client/dist'));
   sequelize.sync({ force: true }).then(() => {
     app.listen(PORT, () => {
       console.log(`Server started on port: ${PORT}`);

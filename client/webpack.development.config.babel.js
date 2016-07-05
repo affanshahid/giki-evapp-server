@@ -3,7 +3,7 @@ import { HotModuleReplacementPlugin } from 'webpack';
 
 const config = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:3000',
+    'webpack-dev-server/client?http://0.0.0.0:8001',
     'webpack/hot/only-dev-server',
     join(__dirname, './src/index.jsx')
   ],
@@ -11,6 +11,7 @@ const config = {
     path: join(__dirname, './dist/'),
     filename: 'bundle.js'
   },
+  devtool: 'source-map',
   resolve: {
     extensions: ['', '.js', '.jsx']
   },

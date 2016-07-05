@@ -12,3 +12,12 @@ for (let key of Object.keys(window)) {
     global[key] = window[key];
   }
 }
+
+// matchMedia polyfill required for react-slick slider
+window.matchMedia = window.matchMedia || function () {
+  return {
+    matches: false,
+    addListener: function () {},
+    removeListener: function () {}
+  };
+};

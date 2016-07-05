@@ -37,21 +37,4 @@ describe('AnnouncementList', () => {
     expect(wrapper.text()).contains('No announcements');
   });
 
-  it('sorts announcements by `createdAt`', () => {
-    const ancData = fromJS([
-      {title: 'third', description: 'bar', createdAt:'02/02/1994 8:00', id:1},
-      {title: 'last', description: 'bar', createdAt:'02/02/1990 8:00', id:4},
-      {title: 'first', description: 'qux', createdAt:'02/04/1995 11:00', id:2},
-      {title: 'second', description: 'JS', createdAt:'03/02/1994 12:00', id:3}
-    ]);
-
-    const wrapper = mount(<AnnouncementList announcements={ancData} />);
-    const announcements = wrapper.find('Announcement');
-    expect(announcements).to.have.lengthOf(4);
-    expect(announcements.at(0).text()).to.contain('first');
-    expect(announcements.at(1).text()).to.contain('second');
-    expect(announcements.at(2).text()).to.contain('third');
-    expect(announcements.at(3).text()).to.contain('last');
-  });
-
 });
