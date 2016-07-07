@@ -1,5 +1,6 @@
 import { join } from 'path';
 import { HotModuleReplacementPlugin } from 'webpack';
+import autoprefixer from 'autoprefixer';
 
 const config = {
   entry: [
@@ -18,9 +19,10 @@ const config = {
   module: {
     loaders: [
       { test: /.jsx?$/, exclude: /node_modules/, loader: 'react-hot!babel' },
-      { test: /.css$/, loader: 'style!css!autoprefixer?browsers=last 2 versions' }
+      { test: /.css$/, loader: 'style!css!postcss' }
     ]
   },
+  postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ],
   plugins: [
     new HotModuleReplacementPlugin()
   ],

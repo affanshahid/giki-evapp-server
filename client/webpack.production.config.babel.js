@@ -1,4 +1,5 @@
 import { join } from 'path';
+import autoprefixer from 'autoprefixer';
 
 export default {
   entry: [
@@ -12,7 +13,8 @@ export default {
   module: {
     loaders: [
       { test: /.jsx?$/, exclude: /node_modules/, loader: 'babel' },
-      { test: /.css$/, loader: 'style!css!autoprefixer?browsers=last 2 versions'}
+      { test: /.css$/, loader: 'style!css!postcss' }
     ]
-  }
+  },
+  postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ]
 };

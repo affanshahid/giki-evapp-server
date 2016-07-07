@@ -6,10 +6,24 @@
   box-sizing: border-box;
 }
 
+ul, ol {
+  list-style: none;
+}
+
 .clearfix:after {
   content: "";
   display: table;
   clear: both;
+}
+
+.container {
+  max-width: 1160px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.alt {
+  text-indent: -9999px;
 }
 
 
@@ -145,6 +159,55 @@ article.news-item .caption h3 {
 article.news-item .caption h2.link:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+
+/*================================================
+ Navbar
+==================================================*/
+
+header {
+  background-color: #184481;
+  color: rgb(252, 252, 252);
+  padding: 20px 10px 15px;
+}
+
+header nav {
+  float: right;
+}
+
+header nav:hover {
+  color: #5E87C0;
+}
+
+header nav li {
+  float: left;
+}
+
+header .container {
+  max-width: 1200px;
+}
+
+header nav li> a {
+  padding: 0 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1.9em;
+  transition: all 0.25s ease-in-out;
+}
+
+header nav li> a:hover {
+  color: rgb(252, 252, 252);
+}
+
+#logo {
+  width: 100px;
+  height: 120px;
+  background-image: url('/images/drop-banner.png');
+  background-repeat: no-repeat;
+  position: absolute;
+  top: -20px;
+  left: 0;
 }
 
 
