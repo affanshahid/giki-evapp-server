@@ -180,7 +180,7 @@ header nav:hover {
   color: #5E87C0;
 }
 
-header nav li {
+header li {
   float: left;
 }
 
@@ -189,10 +189,11 @@ header .container {
 }
 
 header nav li> a {
-  padding: 0 15px;
+  padding: 0 20px;
   text-transform: uppercase;
   font-weight: bold;
-  line-height: 1.9em;
+  line-height: 2.35em;
+  font-size: 1.1em;
   transition: all 0.25s ease-in-out;
 }
 
@@ -208,6 +209,34 @@ header nav li> a:hover {
   position: absolute;
   top: -20px;
   left: 0;
+}
+
+header ul.navbar-buttons {
+  float: right;
+  margin-left: 30px;
+}
+
+header ul.navbar-buttons li button {
+  background-color: #fa7014;
+  border-radius: 3px;
+  color: inherit;
+  padding: 5px 20px;
+  outline: none;
+  border: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 2.1em;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+header ul.navbar-buttons li button:hover {
+  background-color: #C04638;
+}
+
+header ul.navbar-items {
+  margin-right: 30px;
 }
 
 
