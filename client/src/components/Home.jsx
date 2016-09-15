@@ -83,7 +83,7 @@ class Home extends React.Component {
             <section className="event-container">
               <EventList events={modData} />
             </section>
-            <aside>
+            <aside className="announcement-container">
               <AnnouncementList announcements={ancData} />
             </aside>
           </div>

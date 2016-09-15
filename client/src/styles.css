@@ -515,7 +515,7 @@ footer .legal {
   #     #  ####  #    # ######
 ==================================================*/
 
-aside {
+aside.announcement-container {
   width: 29%;
   /*margin-top: -30px;*/
 }
@@ -525,7 +525,7 @@ section.event-container {
   margin-right: 30px;
 }
 
-div.wrapper {
+.content > div.wrapper {
   display: flex;
   align-items: stretch;
 }
