@@ -549,7 +549,7 @@ section.event-container {
     clear: both;
     width: 100%;
   }
-  aside {
+  aside.announcement-container {
     width: 100%;
   }
   div.wrapper {
