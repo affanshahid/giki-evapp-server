@@ -552,7 +552,7 @@ section.event-container {
   aside.announcement-container {
     width: 100%;
   }
-  div.wrapper {
+  .content > div.wrapper {
     flex-direction: column;
   }
   section.event-list div li {
