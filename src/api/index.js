@@ -22,6 +22,7 @@ const announcementRouter = getAnnouncementRouter(parser);
 const moduleRouter = getModuleRouter(parser);
 const newsRouter = getNewsRouter(parser);
 
+
 router.use(moduleRouter);
 router.use(announcementRouter);
 router.use(newsRouter);

@@ -1,7 +1,6 @@
 /* eslint-env mocha */
 import React from 'react';
 import Navbar from '../../src/components/Navbar';
-import NavbarItem from '../../src/components/NavbarItem';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 
@@ -14,12 +13,10 @@ describe('Navbar', () => {
 
   it('displays NavbarItems', () => {
     const wrapper = mount(
-      <Navbar>
-        <NavbarItem title="foo" />
-        <NavbarItem title="bar" />
-      </Navbar>
+      <Navbar />
     );
-    expect(wrapper.find('ul > NavbarItem')).to.have.lengthOf(2);
+    expect(wrapper.find('ul > NavbarItem')).to.have.lengthOf(3);
+    expect(wrapper.find('ul > NavbarButton')).to.have.lengthOf(1);
   });
 
 });
