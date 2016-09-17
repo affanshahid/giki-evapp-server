@@ -37,8 +37,8 @@ describe('Announcement', () => {
     expect(heading).to.have.lengthOf(1);
     expect(paras).to.have.lengthOf(2);
     expect(heading.text()).to.equal('Foo');
-    expect(paras.at(0).text()).to.equal('bar');
-    expect(paras.at(1).text()).to.equal('12/12/2004 10:00');
+    expect(paras.at(0).text()).to.equal('12/12/2004 10:00');
+    expect(paras.at(1).text()).to.equal('bar');
   });
 
 });

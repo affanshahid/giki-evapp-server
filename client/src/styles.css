@@ -1,9 +1,15 @@
+@import 'https://fonts.googleapis.com/css?family=Oswald:300,400,700';
+@import 'https://fonts.googleapis.com/css?family=Righteous';
 * {
   padding: 0;
   margin: 0;
   font-size: 16px;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Oswald, Arial, sans-serif;
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
 }
 
 ul, ol {
@@ -28,10 +34,17 @@ ul, ol {
 
 
 /*================================================
- Announcement
+     #
+    # #   #    # #    #  ####  #    # #    #  ####  ###### #    # ###### #    # #####
+   #   #  ##   # ##   # #    # #    # ##   # #    # #      ##  ## #      ##   #   #
+  #     # # #  # # #  # #    # #    # # #  # #      #####  # ## # #####  # #  #   #
+  ####### #  # # #  # # #    # #    # #  # # #      #      #    # #      #  # #   #
+  #     # #   ## #   ## #    # #    # #   ## #    # #      #    # #      #   ##   #
+  #     # #    # #    #  ####   ####  #    #  ####  ###### #    # ###### #    #   #
 ==================================================*/
 
 li.announcement {
+  font-size: 0.8em;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -44,55 +57,83 @@ li.announcement:last-child {
 }
 
 li.announcement div.dot {
-  height: 20px;
-  width: 20px;
+  height: 10px;
+  width: 10px;
   flex-shrink: 0;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
-li.announcement> div:nth-child(2) {
+li.announcement>div:nth-child(2) {
+  font-size: 1em;
   margin-left: 10px;
   margin-right: 10px;
 }
 
-li.announcement> div:nth-child(2) p {
+li.announcement>div:nth-child(2) p {
   text-align: justify;
+  font-size: 1em;
+  color: rgb(158, 102, 70);
 }
 
-li.announcement> p.date {
+li.announcement>div:nth-child(2) h3 {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  line-height: 2em;
+  color: rgb(196, 107, 56);
+}
+
+
+/*li.announcement> p.date {
   margin-left: auto;
   text-align: right;
   flex-shrink: 0;
   font-size: 0.8em;
   align-self: flex-start;
   font-weight: lighter;
-  ;
   color: rgb(161, 161, 161);
-}
+}*/
 
 
 /*================================================
- AnnouncementList
+     #                                                                                #
+    # #   #    # #    #  ####  #    # #    #  ####  ###### #    # ###### #    # ##### #       #  ####  #####
+   #   #  ##   # ##   # #    # #    # ##   # #    # #      ##  ## #      ##   #   #   #       # #        #
+  #     # # #  # # #  # #    # #    # # #  # #      #####  # ## # #####  # #  #   #   #       #  ####    #
+  ####### #  # # #  # # #    # #    # #  # # #      #      #    # #      #  # #   #   #       #      #   #
+  #     # #   ## #   ## #    # #    # #   ## #    # #      #    # #      #   ##   #   #       # #    #   #
+  #     # #    # #    #  ####   ####  #    #  ####  ###### #    # ###### #    #   #   ####### #  ####    #
 ==================================================*/
 
 section.announcement-list {
-  border: 5px solid rgb(52, 75, 143);
-  border-radius: 15px;
-  background-color: rgba(226, 229, 232, 0.88);
+  /*border: 2px solid rgb(15, 20, 36);*/
+  /*border-radius: 3px;*/
+  background-color: rgba(133, 133, 133, 0.11);
+  padding-top: 10px;
+  height: 100%;
 }
 
-section.announcement-list> h1 {
+section.announcement-list * {
+  font-family: 'Righteous', sans-serif;
+}
+
+section.announcement-list>h1 {
+  color: rgb(24, 68, 129);
   text-align: center;
-  color: rgb(53, 87, 144);
 }
 
 
 /*================================================
- NewsSlider
+  #     #                       #####
+  ##    # ###### #    #  ####  #     # #      # #####  ###### #####
+  # #   # #      #    # #      #       #      # #    # #      #    #
+  #  #  # #####  #    #  ####   #####  #      # #    # #####  #    #
+  #   # # #      # ## #      #       # #      # #    # #      #####
+  #    ## #      ##  ## #    # #     # #      # #    # #      #   #
+  #     # ###### #    #  ####   #####  ###### # #####  ###### #    #
 ==================================================*/
 
 section.news-slider {
-  width: 100vw;
+  width: 100%;
 }
 
 .slick-prev {
@@ -114,7 +155,13 @@ section.news-slider {
 
 
 /*================================================
- NewsItem
+  #     #                      ###
+  ##    # ###### #    #  ####   #  ##### ###### #    #
+  # #   # #      #    # #       #    #   #      ##  ##
+  #  #  # #####  #    #  ####   #    #   #####  # ## #
+  #   # # #      # ## #      #  #    #   #      #    #
+  #    ## #      ##  ## #    #  #    #   #      #    #
+  #     # ###### #    #  ####  ###   #   ###### #    #
 ==================================================*/
 
 article.news-item {
@@ -163,7 +210,13 @@ article.news-item .caption h2.link:hover {
 
 
 /*================================================
- Navbar
+  #     #
+  ##    #   ##   #    # #####    ##   #####
+  # #   #  #  #  #    # #    #  #  #  #    #
+  #  #  # #    # #    # #####  #    # #    #
+  #   # # ###### #    # #    # ###### #####
+  #    ## #    #  #  #  #    # #    # #   #
+  #     # #    #   ##   #####  #    # #    #
 ==================================================*/
 
 header {
@@ -174,6 +227,7 @@ header {
 
 header nav {
   float: right;
+  color: rgb(252, 252, 252);
 }
 
 header nav:hover {
@@ -184,21 +238,46 @@ header li {
   float: left;
 }
 
+header nav li {
+  padding: 0 20px;
+}
+
 header .container {
   max-width: 1200px;
 }
 
-header nav li> a {
-  padding: 0 20px;
+header nav li>a {
   text-transform: uppercase;
   font-weight: bold;
   line-height: 2.35em;
   font-size: 1.1em;
   transition: all 0.25s ease-in-out;
+  color: inherit;
+  position: relative;
 }
 
-header nav li> a:hover {
+header nav li>a:hover {
   color: rgb(252, 252, 252);
+}
+
+header nav:hover li>a.active::after {
+  background-color: rgba(255, 130, 46, 0.6);
+}
+
+header nav li>a.active:hover::after {
+  background-color: #FF822E;
+}
+
+header nav li>a.active::after {
+  background-color: #FF822E;
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 100%;
+  left: 0;
+  bottom: -5px;
+  border-radius: 20px;
+  transition: all 0.25s ease-in-out;
 }
 
 #logo {
@@ -209,6 +288,7 @@ header nav li> a:hover {
   position: absolute;
   top: -20px;
   left: 0;
+  z-index: 100;
 }
 
 header ul.navbar-buttons {
@@ -241,22 +321,290 @@ header ul.navbar-items {
 
 
 /*================================================
- Extra Small Devices
+  #######                            ###
+  #       #    # ###### #    # #####  #  ##### ###### #    #
+  #       #    # #      ##   #   #    #    #   #      ##  ##
+  #####   #    # #####  # #  #   #    #    #   #####  # ## #
+  #       #    # #      #  # #   #    #    #   #      #    #
+  #        #  #  #      #   ##   #    #    #   #      #    #
+  #######   ##   ###### #    #   #   ###   #   ###### #    #
+==================================================*/
+
+li.event-item {
+  list-style: none;
+  position: relative;
+}
+
+li.event-item article.container {
+  border-radius: 15px;
+  height: 350px;
+  width: 410px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 2px 40px -5px black;
+  overflow: hidden;
+  z-index: 100;
+}
+
+li.event-item .timestamp {
+  position: absolute;
+  top: 20px;
+  left: -4px;
+  height: auto;
+  width: auto;
+  padding: 7px;
+  background-color: #266ac8;
+  color: white;
+  font-weight: 300;
+  font-size: 1.2em;
+  line-height: 1.1em;
+  z-index: 200;
+  box-shadow: 8px 2px 40px -5px black;
+}
+
+li.event-item article.container .image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 150px;
+  flex-grow: 1.5;
+  transition: all 0.25s ease-in-out;
+  z-index: -100;
+}
+
+li.event-item:hover article.container .image {
+  transform: scale(1.101, 1.101);
+}
+
+li.event-item:hover article.container .text {
+  flex-grow: 3.0;
+}
+
+li.event-item article.container .text {
+  background-color: black;
+  color: white;
+  flex-grow: 1;
+  z-index: 50;
+  padding: 3px 35px 3px 15px;
+  transition: all 0.25s ease-in-out
+}
+
+li.event-item article.container .text h4 {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+li.event-item article.container .text p {
+  color: #989b97;
+  font-size: 1.1em;
+  position: relative;
+  left: 20px;
+}
+
+
+/*================================================
+ #######                            #
+ #       #    # ###### #    # ##### #       #  ####  #####
+ #       #    # #      ##   #   #   #       # #        #
+ #####   #    # #####  # #  #   #   #       #  ####    #
+ #       #    # #      #  # #   #   #       #      #   #
+ #        #  #  #      #   ##   #   #       # #    #   #
+ #######   ##   ###### #    #   #   ####### #  ####    #
+==================================================*/
+
+section.event-list div h3 {
+  color: #fa7014;
+  margin: 17px 5px;
+  text-align: center;
+  position: relative;
+}
+
+section.event-list div:first-child h3 {
+  margin-top: 0px;
+}
+
+section.event-list div h3 span {
+  background-color: #fff;
+  z-index: 1;
+  position: relative;
+  left: -20%;
+  font-size: 1.5em;
+  padding: 0 10px;
+}
+
+section.event-list div h3:before {
+  border-top: 2px solid rgba(250, 112, 20, 0.49);
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin: 0 auto;
+}
+
+section.event-list div li {
+  float: left;
+  margin: 10px 20px;
+}
+
+
+/*================================================
+   #######
+   #        ####   ####  ##### ###### #####
+   #       #    # #    #   #   #      #    #
+   #####   #    # #    #   #   #####  #    #
+   #       #    # #    #   #   #      #####
+   #       #    # #    #   #   #      #   #
+   #        ####   ####    #   ###### #    #
+==================================================*/
+
+footer {
+  background-color: #333333;
+  opacity: 0.9;
+  color: white;
+  width: 100%;
+  margin-top: 40px;
+}
+
+footer section {
+  float: left;
+  text-align: center;
+  margin: 2% 2%;
+  width: 29%;
+}
+
+footer section p {
+  font-weight: 300;
+}
+
+footer section a {
+  color: white;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+footer section a:hover {
+  color: blue;
+  text-decoration: none;
+}
+
+footer section h3 {
+  padding: 20px;
+  font-weight: 700;
+}
+
+footer .legal {
+  clear: both;
+  border-top: 1px solid #4D4E50;
+  background-color: #1d1d1d;
+  opacity: 0.9;
+  max-height: 50px;
+  text-align: center;
+  padding: 15px;
+}
+
+
+/*================================================
+  #     #
+  #     #  ####  #    # ######
+  #     # #    # ##  ## #
+  ####### #    # # ## # #####
+  #     # #    # #    # #
+  #     # #    # #    # #
+  #     #  ####  #    # ######
+==================================================*/
+
+aside.announcement-container {
+  width: 29%;
+  /*margin-top: -30px;*/
+}
+
+section.event-container {
+  flex-grow: 1;
+  margin-right: 30px;
+}
+
+.content > div.wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+
+/*================================================
+  #######                                #####                                 ######
+  #       #    # ##### #####    ##      #     # #    #   ##   #      #         #     # ###### #    #
+  #        #  #    #   #    #  #  #     #       ##  ##  #  #  #      #         #     # #      #    #
+  #####     ##     #   #    # #    #     #####  # ## # #    # #      #         #     # #####  #    #
+  #         ##     #   #####  ######          # #    # ###### #      #         #     # #      #    #
+  #        #  #    #   #   #  #    #    #     # #    # #    # #      #         #     # #       #  #
+  ####### #    #   #   #    # #    #     #####  #    # #    # ###### ######    ######  ######   ##
 ==================================================*/
 
 @media (max-width: 767px) {
   article.news-item .caption h2 {
     font-size: 1.4em;
   }
+  footer section {
+    clear: both;
+    width: 100%;
+  }
+  aside.announcement-container {
+    width: 100%;
+  }
+  .content > div.wrapper {
+    flex-direction: column;
+  }
+  section.event-list div li {
+    margin: 20px auto;
+    display: table;
+    float: none;
+  }
+  section.event-container {
+    flex-grow: 0;
+    margin-right: 0px;
+  }
+  header ul.navbar-buttons {
+    margin-left: 7px;
+  }
+  header ul.navbar-buttons li button {
+    font-size: 0.8em;
+  }
+  header nav li>a {
+    font-size: 1em;
+  }
+  header nav li {
+    padding: 0 15px;
+  }
 }
 
 
 /*================================================
- Super Extra Small Devices
+   #####                                 #######                                #####                                 ######
+  #     # #    # #####  ###### #####     #       #    # ##### #####    ##      #     # #    #   ##   #      #         #     # ###### #    #
+  #       #    # #    # #      #    #    #        #  #    #   #    #  #  #     #       ##  ##  #  #  #      #         #     # #      #    #
+   #####  #    # #    # #####  #    #    #####     ##     #   #    # #    #     #####  # ## # #    # #      #         #     # #####  #    #
+        # #    # #####  #      #####     #         ##     #   #####  ######          # #    # ###### #      #         #     # #      #    #
+  #     # #    # #      #      #   #     #        #  #    #   #   #  #    #    #     # #    # #    # #      #         #     # #       #  #
+   #####   ####  #      ###### #    #    ####### #    #   #   #    # #    #     #####  #    # #    # ###### ######    ######  ######   ##
 ==================================================*/
 
 @media (max-width: 479px) {
   article.news-item .caption h2 {
     font-size: 1.2em;
+  }
+
+  header ul.navbar-buttons {
+    margin-left: 4px;
+  }
+  header ul.navbar-buttons li button {
+    font-size: 0.8em;
+  }
+  header nav li>a {
+    font-size: 0.85em;
+  }
+
+  header nav li {
+    padding: 0 10px;
   }
 }
