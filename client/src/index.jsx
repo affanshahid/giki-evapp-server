@@ -4,7 +4,8 @@ import './styles.css';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import App from './components/App';
 import Home from './components/Home';
-
+import { Provider } from 'react-redux';
+import configureStore from './configureStore';
 
 const router = (
   <Router history={hashHistory}>
@@ -15,6 +16,8 @@ const router = (
 );
 
 ReactDOM.render(
-  router,
+  <Provider store={configureStore()}>
+    {router}
+  </Provider>,
   document.getElementById('app')
 );

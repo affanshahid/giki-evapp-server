@@ -9,7 +9,7 @@ export function startServer() {
 
   app.use('/api/v1', api);
   app.use(express.static('./client/dist'));
-  sequelize.sync({ force: true }).then(() => {
+  sequelize.sync().then(() => {
     app.listen(PORT, () => {
       console.log(`Server started on port: ${PORT}`);
     });

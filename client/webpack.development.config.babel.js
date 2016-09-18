@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { HotModuleReplacementPlugin } from 'webpack';
+import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import autoprefixer from 'autoprefixer';
 
 const config = {
@@ -22,9 +22,14 @@ const config = {
       { test: /.css$/, loader: 'style!css!postcss' }
     ]
   },
-  postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ],
+  postcss: [autoprefixer({ browsers: ['last 5 versions'] })],
   plugins: [
-    new HotModuleReplacementPlugin()
+    new HotModuleReplacementPlugin(),
+    new DefinePlugin({
+      'process.env': {
+        'NODE_ENV': 'development'
+      }
+    })
   ],
   devServer: {
     contentBase: join(__dirname, './dist')

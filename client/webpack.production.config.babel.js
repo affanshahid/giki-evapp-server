@@ -1,5 +1,6 @@
 import { join } from 'path';
 import autoprefixer from 'autoprefixer';
+import { DefinePlugin } from 'webpack';
 
 export default {
   entry: [
@@ -16,5 +17,12 @@ export default {
       { test: /.css$/, loader: 'style!css!postcss' }
     ]
   },
+  plugins: [
+    new DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }
+    })
+  ],
   postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ]
 };
