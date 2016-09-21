@@ -3,6 +3,9 @@ import Announcement from './Announcement';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { sortByDate } from '../utils/utils';
 import { List } from 'immutable';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+import { getAnnouncements } from '../reducers';
 
 class AnnouncementList extends React.Component {
 
@@ -11,19 +14,29 @@ class AnnouncementList extends React.Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData(){
+    this.props.fetchAnnouncements();
+  }
+
+  getHeaderText() {
+    return this.props.announcements.size > 0? 'Announcements': 'No Announcements'
+  }
+
   render () {
     return (
       <section className="announcement-list">
-        <h1>Announcements</h1>
+        <h3><span>{this.getHeaderText()}</span></h3>
         <ul>
           {
-            this.props.announcements.size > 0?
             sortByDate(this.props.announcements).map(anc => (
               <Announcement
                 key={anc.get('id')}
                 announcement={anc} />
-            )):
-            (<h3>No announcements</h3>)
+            ))
           }
         </ul>
       </section>
@@ -35,4 +48,14 @@ AnnouncementList.defaultProps = {
   announcements: List()
 };
 
+const mapStateToProps = (state) => {
+  return {
+    announcements: getAnnouncements(state)
+  };
+};
+
+AnnouncementList = connect(
+  mapStateToProps,
+  actions
+)(AnnouncementList);
 export default AnnouncementList;

@@ -1,10 +1,10 @@
 import { join } from 'path';
-import { HotModuleReplacementPlugin } from 'webpack';
+import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack';
 import autoprefixer from 'autoprefixer';
 
 const config = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:8001',
+    'webpack-dev-server/client?http://0.0.0.0:8002',
     'webpack/hot/only-dev-server',
     join(__dirname, './src/index.jsx')
   ],
@@ -22,12 +22,23 @@ const config = {
       { test: /.css$/, loader: 'style!css!postcss' }
     ]
   },
-  postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ],
+  postcss: [autoprefixer({ browsers: ['last 5 versions'] })],
   plugins: [
-    new HotModuleReplacementPlugin()
+    new HotModuleReplacementPlugin(),
+    new DefinePlugin({
+      'process.env': {
+        'NODE_ENV': '"development"'
+      }
+    })
   ],
   devServer: {
-    contentBase: join(__dirname, './dist')
+    contentBase: join(__dirname, './dist'),
+    proxy: {
+      '/api/v1/**': {
+        target: 'http://localhost:8001/',
+        changeOrigin: true
+      }
+    }
   }
 };
 module.exports = config;

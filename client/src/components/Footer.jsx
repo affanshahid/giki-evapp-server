@@ -22,7 +22,7 @@ class Footer extends React.Component {
             <a href="http://www.giki.edu.pk" target="_blank">WEBSITE</a>
           </p>
         </section>
-        <section class="apps">
+        <section className="apps">
           <h3>Download the App</h3>
           <div>
             <a target="_blank" href="https://play.google.com/store/apps/details?id=com.affan.android.mediaproject&hl=en">

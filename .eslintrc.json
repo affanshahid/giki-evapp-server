@@ -13,6 +13,7 @@
         "SwitchCase": 1
       }
     ],
+    "no-class-assign": "off",
     "linebreak-style": [
       0,
       "windows"

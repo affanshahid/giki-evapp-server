@@ -1,15 +1,16 @@
 import express from 'express';
 import config from './config';
 import { sequelize } from './models';
+import morgan from 'morgan';
 import api from './api';
 
 export function startServer() {
   const app = express();
   const PORT = config.port;
-
+  app.use(morgan('combined'));
   app.use('/api/v1', api);
   app.use(express.static('./client/dist'));
-  sequelize.sync({ force: true }).then(() => {
+  sequelize.sync().then(() => {
     app.listen(PORT, () => {
       console.log(`Server started on port: ${PORT}`);
     });

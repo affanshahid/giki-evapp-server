@@ -4,6 +4,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import NewsItem from './NewsItem';
 import { fromJS, List } from 'immutable';
 import { sortByDate } from '../utils/utils';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
+import { getNewsList } from '../reducers';
 
 class NewsSlider extends React.Component {
 
@@ -18,13 +21,21 @@ class NewsSlider extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData(){
+    this.props.fetchNewsList();
+  }
+
   render() {
     return (
       <section className="news-slider">
         <Slider {...this.settings}>
           {
             this.props.newsList.size > 0?
-            sortByDate(this.props.newsList).map((news) => (
+            sortByDate(this.props.newsList).reverse().map((news) => (
               <div key={news.get('id')}><NewsItem news={news} /></div>)
             ):
             <div><NewsItem news={this.props.fallbackNews} /></div>
@@ -44,5 +55,16 @@ NewsSlider.defaultProps = {
     fileUrl: '/images/comingsoon.jpg'
   })
 };
+
+function mapStateToProps(state) {
+  return {
+    newsList: getNewsList(state)
+  };
+}
+
+NewsSlider = connect(
+  mapStateToProps,
+  actions
+)(NewsSlider);
 
 export default NewsSlider;
