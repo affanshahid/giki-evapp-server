@@ -29,7 +29,7 @@ class AnnouncementList extends React.Component {
   render () {
     return (
       <section className="announcement-list">
-        <h1>{this.getHeaderText()}</h1>
+        <h3><span>{this.getHeaderText()}</span></h3>
         <ul>
           {
             sortByDate(this.props.announcements).map(anc => (

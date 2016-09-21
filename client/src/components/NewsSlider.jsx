@@ -35,7 +35,7 @@ class NewsSlider extends React.Component {
         <Slider {...this.settings}>
           {
             this.props.newsList.size > 0?
-            sortByDate(this.props.newsList).map((news) => (
+            sortByDate(this.props.newsList).reverse().map((news) => (
               <div key={news.get('id')}><NewsItem news={news} /></div>)
             ):
             <div><NewsItem news={this.props.fallbackNews} /></div>

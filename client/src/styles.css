@@ -1,5 +1,4 @@
 @import 'https://fonts.googleapis.com/css?family=Oswald:300,400,700';
-@import 'https://fonts.googleapis.com/css?family=Righteous';
 * {
   padding: 0;
   margin: 0;
@@ -44,54 +43,33 @@ ul, ol {
 ==================================================*/
 
 li.announcement {
-  font-size: 0.8em;
+  padding-bottom: 5px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+li.announcement>div {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-bottom: 1px solid rgb(193, 193, 193);
-  padding: 10px;
+  align-items: baseline;
+  margin-bottom: 15px;
 }
 
-li.announcement:last-child {
-  border-bottom: none;
+li.announcement>div>h4 {
+  flex-grow: 1;
+  color: #fa7014;
+  font-size: 1.02em;
 }
 
-li.announcement div.dot {
-  height: 10px;
-  width: 10px;
-  flex-shrink: 0;
-  border-radius: 5px;
+li.announcement>div>.date {
+  flex-grow: 0;
+  color: #fa7014;
+  font-weight: 300;
+  font-size: 0.7em;
 }
 
-li.announcement>div:nth-child(2) {
-  font-size: 1em;
-  margin-left: 10px;
-  margin-right: 10px;
+li.announcement>p {
+  font-style: italic;
 }
-
-li.announcement>div:nth-child(2) p {
-  text-align: justify;
-  font-size: 1em;
-  color: rgb(158, 102, 70);
-}
-
-li.announcement>div:nth-child(2) h3 {
-  font-size: 1.2em;
-  text-transform: uppercase;
-  line-height: 2em;
-  color: rgb(196, 107, 56);
-}
-
-
-/*li.announcement> p.date {
-  margin-left: auto;
-  text-align: right;
-  flex-shrink: 0;
-  font-size: 0.8em;
-  align-self: flex-start;
-  font-weight: lighter;
-  color: rgb(161, 161, 161);
-}*/
 
 
 /*================================================
@@ -104,21 +82,35 @@ li.announcement>div:nth-child(2) h3 {
   #     # #    # #    #  ####   ####  #    #  ####  ###### #    # ###### #    #   #   ####### #  ####    #
 ==================================================*/
 
-section.announcement-list {
-  /*border: 2px solid rgb(15, 20, 36);*/
-  /*border-radius: 3px;*/
-  background-color: rgba(133, 133, 133, 0.11);
-  padding-top: 10px;
-  height: 100%;
+section.announcement-list ul>li {
+  margin-bottom: 30px;
 }
 
-section.announcement-list * {
-  font-family: 'Righteous', sans-serif;
-}
-
-section.announcement-list>h1 {
-  color: rgb(24, 68, 129);
+section.announcement-list>h3 {
+  color: #266AC8;
+  margin: 0px 5px 50px;
   text-align: center;
+  position: relative;
+}
+
+section.announcement-list>h3 span {
+  background-color: #fff;
+  z-index: 1;
+  position: relative;
+  left: -10%;
+  font-size: 1.5em;
+  padding: 0 10px;
+}
+
+section.announcement-list>h3:before {
+  border-top: 2px solid rgba(38, 106, 200, 0.48);
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin: 0 auto;
 }
 
 
@@ -516,7 +508,7 @@ footer .legal {
 ==================================================*/
 
 aside.announcement-container {
-  width: 29%;
+  width: 30%;
   /*margin-top: -30px;*/
 }
 
@@ -525,7 +517,7 @@ section.event-container {
   margin-right: 30px;
 }
 
-.content > div.wrapper {
+.content>div.wrapper {
   display: flex;
   align-items: stretch;
 }
@@ -552,7 +544,7 @@ section.event-container {
   aside.announcement-container {
     width: 100%;
   }
-  .content > div.wrapper {
+  .content>div.wrapper {
     flex-direction: column;
   }
   section.event-list div li {
@@ -593,7 +585,6 @@ section.event-container {
   article.news-item .caption h2 {
     font-size: 1.2em;
   }
-
   header ul.navbar-buttons {
     margin-left: 4px;
   }
@@ -603,7 +594,6 @@ section.event-container {
   header nav li>a {
     font-size: 0.85em;
   }
-
   header nav li {
     padding: 0 10px;
   }
