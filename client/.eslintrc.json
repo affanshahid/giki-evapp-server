@@ -11,6 +11,7 @@
     "react/jsx-uses-vars": [2],
     "react/jsx-uses-react": "error",
     "react/react-in-jsx-scope": 2,
+    "no-class-assign": "off",
     "indent": [
       "warn",
       2, {

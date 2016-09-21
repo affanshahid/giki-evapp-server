@@ -1,3 +1,4 @@
 import { fetchAnnouncements } from './announcements';
+import { fetchNewsList } from './news';
 
-export { fetchAnnouncements };
+export { fetchAnnouncements, fetchNewsList };

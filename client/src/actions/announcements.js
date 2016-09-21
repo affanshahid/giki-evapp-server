@@ -1,5 +1,5 @@
 import { getAnnouncementDataIsFetching } from '../reducers';
-import api from '../api';
+import * as api from '../api';
 
 //returns thunk-action
 export function fetchAnnouncements() {

@@ -2,10 +2,10 @@ import { List, fromJS } from 'immutable';
 import { combineReducers } from '../utils/reducerUtils';
 
 //state = list of announcements
-function announcements(state = List(), action) {
+function newsList(state = List(), action) {
   switch (action.type) {
-    case 'FETCH_ANNOUNCEMENTS_SUCCESS':
-      return fromJS(action.response.announcements);
+    case 'FETCH_NEWSLIST_SUCCESS':
+      return fromJS(action.response.newsList);
     default:
       return state;
   }
@@ -13,10 +13,10 @@ function announcements(state = List(), action) {
 
 function isFetching(state = false, action) {
   switch(action.type) {
-    case 'FETCH_ANNOUNCEMENTS_FAILURE':
-    case 'FETCH_ANNOUNCEMENTS_SUCCESS':
+    case 'FETCH_NEWSLIST_FAILURE':
+    case 'FETCH_NEWSLIST_SUCCESS':
       return false;
-    case 'FETCH_ANNOUNCEMENTS_REQUEST':
+    case 'FETCH_NEWSLIST_REQUEST':
       return true;
     default:
       return state;
@@ -25,10 +25,10 @@ function isFetching(state = false, action) {
 
 function error(state = null, action) {
   switch (action.type) {
-    case 'FETCH_ANNOUNCEMENTS_SUCCESS':
-    case 'FETCH_ANNOUNCEMENTS_REQUEST':
+    case 'FETCH_NEWSLIST_SUCCESS':
+    case 'FETCH_NEWSLIST_REQUEST':
       return null;
-    case 'FETCH_ANNOUNCEMENTS_FAILURE':
+    case 'FETCH_NEWSLIST_FAILURE':
       return action.message;
     default:
       return state;
@@ -37,7 +37,7 @@ function error(state = null, action) {
 
 //state = annData
 export default combineReducers({
-  announcements,
+  newsList,
   isFetching,
   error
 });
@@ -46,6 +46,6 @@ export function getIsFetching(state) {
   return state.get('isFetching');
 }
 
-export function getAnnouncements(state) {
-  return state.get('announcements');
+export function getNewsList(state) {
+  return state.get('newsList');
 }

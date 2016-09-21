@@ -22,7 +22,7 @@ class EventList extends React.Component {
     });
     const views = [];
     for (let item of keys){
-      const date = moment(item);
+      const date = moment(new Date(item));
       let view = (
         <div key={date.toString()}>
           <h3><span>{date.format('dddd, MMM Do')}</span></h3>

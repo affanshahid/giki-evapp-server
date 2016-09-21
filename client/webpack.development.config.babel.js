@@ -4,7 +4,7 @@ import autoprefixer from 'autoprefixer';
 
 const config = {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:8001',
+    'webpack-dev-server/client?http://0.0.0.0:8002',
     'webpack/hot/only-dev-server',
     join(__dirname, './src/index.jsx')
   ],
@@ -27,12 +27,18 @@ const config = {
     new HotModuleReplacementPlugin(),
     new DefinePlugin({
       'process.env': {
-        'NODE_ENV': 'development'
+        'NODE_ENV': '"development"'
       }
     })
   ],
   devServer: {
-    contentBase: join(__dirname, './dist')
+    contentBase: join(__dirname, './dist'),
+    proxy: {
+      '/api/v1/**': {
+        target: 'http://localhost:8001/',
+        changeOrigin: true
+      }
+    }
   }
 };
 module.exports = config;

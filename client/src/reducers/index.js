@@ -1,5 +1,7 @@
 import announcementData, * as fromAnnoucementData from './announcementData';
-import { Map } from 'immutable';
+import newsData, * as fromNewsData from './newsData';
+import { combineReducers } from '../utils/reducerUtils';
+
 /*
 state plan - all lists and objects are immutable Lists and Maps
 {
@@ -16,14 +18,23 @@ state plan - all lists and objects are immutable Lists and Maps
 
 */
 
-export default function (state = Map(), action) {
-  state = state.update(
-    "announcementData",
-    oldData => announcementData(oldData, action)
-  );
-  return state;
-}
+export default combineReducers({
+  announcementData,
+  newsData
+});
 
 export function getAnnouncementDataIsFetching(state) {
-  return fromAnnoucementData.getIsFetching(state.announcementData);
+  return fromAnnoucementData.getIsFetching(state.get('announcementData'));
+}
+
+export function getAnnouncements(state) {
+  return fromAnnoucementData.getAnnouncements(state.get('announcementData'));
+}
+
+export function getNewsDataIsFetching(state) {
+  return fromNewsData.getIsFetching(state.get('newsData'));
+}
+
+export function getNewsList(state) {
+  return fromNewsData.getNewsList(state.get('newsData'));
 }
