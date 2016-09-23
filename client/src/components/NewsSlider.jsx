@@ -6,7 +6,7 @@ import { fromJS, List } from 'immutable';
 import { sortByDate } from '../utils/utils';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import { getNewsList } from '../reducers';
+import { getList } from '../reducers';
 
 class NewsSlider extends React.Component {
 
@@ -58,7 +58,7 @@ NewsSlider.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    newsList: getNewsList(state)
+    newsList: getList(state, 'newsData')
   };
 }
 

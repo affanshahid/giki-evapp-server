@@ -3,6 +3,9 @@ import EventItem from './EventItem';
 import moment from 'moment';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { groupByDays } from '../utils/utils';
+import * as actions from '../actions';
+import { getList } from '../reducers';
+import { connect } from 'react-redux';
 
 class EventList extends React.Component {
   constructor(props) {
@@ -10,8 +13,16 @@ class EventList extends React.Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData(){
+    this.props.fetchModules();
+  }
+
   createViews() {
-    const mappedList = groupByDays(this.props.events, 'startEpoch');
+    const mappedList = groupByDays(this.props.modules, 'startEpoch');
     const keys = mappedList.keySeq().sort((v1, v2) => {
       const date1 = new Date(v1).getTime();
       const date2 = new Date(v2).getTime();
@@ -49,5 +60,16 @@ class EventList extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    modules: getList(state, 'moduleData')
+  };
+}
+
+EventList = connect(
+  mapStateToProps,
+  actions
+)(EventList);
 
 export default EventList;
