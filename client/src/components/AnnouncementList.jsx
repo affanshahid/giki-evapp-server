@@ -5,7 +5,7 @@ import { sortByDate } from '../utils/utils';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import { getAnnouncements } from '../reducers';
+import { getList } from '../reducers';
 
 class AnnouncementList extends React.Component {
 
@@ -50,7 +50,7 @@ AnnouncementList.defaultProps = {
 
 const mapStateToProps = (state) => {
   return {
-    announcements: getAnnouncements(state)
+    announcements: getList(state, 'announcementData')
   };
 };
 

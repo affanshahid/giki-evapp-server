@@ -4,6 +4,17 @@ export function fetchAnnouncements() {
   return get('/api/v1/announcement');
 }
 
+export function fetchModules() {
+  let prom = get('/api/v1/module');
+  if (process.env.NODE_ENV === 'development') {
+    prom = prom.then(response => {
+      response.data.modules = convertFileUrls(response.data.modules);
+      return response;
+    });
+  }
+  return prom;
+}
+
 export function fetchNewsList() {
   let prom = get('/api/v1/news');
   if (process.env.NODE_ENV === 'development') {
@@ -15,8 +26,8 @@ export function fetchNewsList() {
   return prom;
 }
 
-function convertFileUrls(newsList) {
-  return newsList.map((item) => {
+function convertFileUrls(list) {
+  return list.map((item) => {
     item.fileUrl = mapFileUrl(item.fileUrl);
     return item;
   });
