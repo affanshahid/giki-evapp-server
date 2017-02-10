@@ -10,7 +10,9 @@ export default {
     path: join(__dirname, './dist/'),
     filename: 'bundle.js'
   },
-  resolve: ['', '.jsx', '.js'],
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     loaders: [
       { test: /.jsx?$/, exclude: /node_modules/, loader: 'babel' },
