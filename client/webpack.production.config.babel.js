@@ -1,6 +1,6 @@
 import { join } from 'path';
 import autoprefixer from 'autoprefixer';
-import { DefinePlugin } from 'webpack';
+import { DefinePlugin, optimize } from 'webpack';
 
 const config = {
   entry: [
@@ -24,6 +24,9 @@ const config = {
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
+    }),
+    new optimize.UglifyJsPlugin({
+      compress: { warnings: false }
     })
   ],
   postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ]
