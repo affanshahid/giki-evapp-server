@@ -2,7 +2,7 @@ import { join } from 'path';
 import autoprefixer from 'autoprefixer';
 import { DefinePlugin } from 'webpack';
 
-export default {
+const config = {
   entry: [
     join(__dirname, './src/index.jsx')
   ],
@@ -28,3 +28,6 @@ export default {
   ],
   postcss: [ autoprefixer({ browsers: ['last 5 versions'] }) ]
 };
+
+module.exports = config;
+export default config;
