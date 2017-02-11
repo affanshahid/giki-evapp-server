@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { News } from '../models';
+import { News, sequelize } from '../models';
 import { pick } from 'lodash';
 
 import config from '../config';
@@ -25,6 +25,35 @@ export function getRouter(parser) {
     News.create(props).then(news => {
       res.json({ success: true, news });
     }, (err) => {
+      res.status(400).json({ success: false, error: err });
+    });
+  });
+
+  router.put('/news/:id', parser.single('image'), (req, res) => {
+    const props = pick(req.body, 'title', 'description', 'link');
+    const id = req.params.id;
+
+    if (req.file && req.file.fieldname === 'image') {
+      props.fileUrl = getFileUrl(req.file);
+    }
+
+    sequelize.transaction(transaction => {
+      return News.findById(id, {transaction}).then(news => {
+        Object.assign(news, props);
+        return news.save({transaction})
+      })
+    }).then(news => {
+      res.json({ success: true, news });
+    }).catch(err => {
+      res.status(400).json({ success: false, error: err });
+    });
+  });
+
+  router.delete('/news/:id', (req, res) => {
+    const id = req.params.id;
+    News.destroy({where: { id }}).then(numDestroyed => {
+      res.status(204).send();
+    }).catch(err => {
       res.status(400).json({ success: false, error: err });
     });
   });

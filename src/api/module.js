@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Module } from '../models';
+import { Module, sequelize } from '../models';
 import { pick } from 'lodash';
 
 import config from '../config';
@@ -41,6 +41,47 @@ export function getRouter(parser) {
       res.status(400).json({ error: err, success: false });
     });
   });
+
+  router.put('/module/:id', parser.single('image'), (req, res) => {
+    const props = pick(req.body, [
+      'title',
+      'description',
+      'link',
+      'category',
+      'startTime',
+      'endTime',
+      'locTag'
+    ]);
+
+    if (epochRegex.test(props.startTime)) props.startTime = parseInt(props.startTime);
+    if (epochRegex.test(props.endTime)) props.endTime = parseInt(props.endTime);
+    const id = req.params.id;
+
+    if (req.file && req.file.fieldname === 'image') {
+      props.fileUrl = getFileUrl(req.file);
+    }
+
+    sequelize.transaction(transaction => {
+      return Module.findById(id, {transaction}).then(module => {
+        Object.assign(module, props);
+        return module.save({transaction})
+      })
+    }).then(module => {
+      res.json({ success: true, module });
+    }).catch(err => {
+      res.status(400).json({ success: false, error: err });
+    });
+  });
+
+  router.delete('/module/:id', (req, res) => {
+    const id = req.params.id;
+    Module.destroy({where: { id }}).then(numDestroyed => {
+      res.status(204).send();
+    }).catch(err => {
+      res.status(400).json({ success: false, error: err });
+    });
+  });
+
 
   return router;
 }
