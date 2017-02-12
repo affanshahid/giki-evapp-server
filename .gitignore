@@ -10,3 +10,5 @@ test/fixtures/data/images/*
 client/dist/*
 !client/dist/index.html
 !client/dist/images/
+dummy_data/
+.DS_STORE
